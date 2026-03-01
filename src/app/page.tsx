@@ -179,7 +179,7 @@ export default function Home() {
         <div className="text-center hero-float">
           <div className="flex items-center justify-center gap-2 mb-6 fade-in-up">
             <span className="text-sm font-medium text-muted-foreground bg-muted px-4 py-1.5 rounded-full">
-              Real-time multiplayer quizzes
+              Многопользовательские викторины в реальном времени
             </span>
           </div>
 
@@ -188,7 +188,7 @@ export default function Home() {
           </h1>
 
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-xl mx-auto mb-12 fade-in-up-delay-2">
-            Create, host, and play interactive quizzes in real-time
+            Создавайте, проводите и играйте в интерактивные викторины в реальном времени
           </p>
 
           <div className="fade-in-up-delay-2">
@@ -198,7 +198,7 @@ export default function Home() {
               className="text-lg px-10 py-7 min-w-[200px] bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <Link href="/menu" className="flex items-center gap-2">
-                Continue
+                Продолжить
                 <ChevronRight className="w-5 h-5" />
               </Link>
             </Button>
@@ -208,7 +208,7 @@ export default function Home() {
         {/* Footer */}
         <div className="absolute bottom-6 text-center text-sm text-muted-foreground fade-in-up-delay-2">
           <p>
-            Built by{" "}
+            Создано{" "}
             <a
               href="https://err0r.dev"
               target="_blank"

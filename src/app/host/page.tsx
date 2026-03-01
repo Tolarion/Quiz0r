@@ -48,7 +48,7 @@ function HostPageContent() {
       const res = await fetch("/api/quizzes");
       if (res.ok) {
         const data = await res.json();
-        // Filter to only quizzes with questions
+        // Показываем только викторины с вопросами
         const withQuestions = data.filter(
           (q: Quiz) => q.questionCount > 0
         );
@@ -99,10 +99,10 @@ function HostPageContent() {
         router.push(`/host/${game.gameCode}/control`);
       } else {
         const data = await res.json();
-        setError(data.error || "Failed to create game");
+        setError(data.error || "Не удалось создать игру");
       }
     } catch {
-      setError("Failed to create game");
+      setError("Не удалось создать игру");
     } finally {
       setCreating(false);
     }
@@ -116,40 +116,40 @@ function HostPageContent() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Monitor className="w-5 h-5" />
-            Host a Game
+            Проведение игры
           </CardTitle>
           <CardDescription>
-            Select a quiz to start a new game session. Players will be able to
-            join using a QR code or game code.
+            Выберите викторину, чтобы начать новую игровую сессию. Игроки смогут
+            присоединиться по QR-коду или коду игры.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {loading ? (
-            <p className="text-muted-foreground">Loading quizzes...</p>
+            <p className="text-muted-foreground">Загрузка викторин...</p>
           ) : quizzes.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground mb-4">
-                No quizzes available. Create a quiz first!
+                Нет доступных викторин. Сначала создайте викторину!
               </p>
               <Link href="/admin/quiz/new">
-                <Button>Create Quiz</Button>
+                <Button>Создать викторину</Button>
               </Link>
             </div>
           ) : (
             <>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Select Quiz</label>
+                <label className="text-sm font-medium">Выберите викторину</label>
                 <Select
                   value={selectedQuizId}
                   onValueChange={setSelectedQuizId}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Choose a quiz..." />
+                    <SelectValue placeholder="Выберите викторину..." />
                   </SelectTrigger>
                   <SelectContent>
                     {quizzes.map((quiz) => (
                       <SelectItem key={quiz.id} value={quiz.id}>
-                        {quiz.title} ({quiz.questionCount} questions)
+                        {quiz.title} ({quiz.questionCount} вопросов)
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -160,8 +160,7 @@ function HostPageContent() {
                 <div className="p-4 bg-muted rounded-lg">
                   <h3 className="font-medium">{selectedQuiz.title}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {selectedQuiz.questionCount} question
-                    {selectedQuiz.questionCount !== 1 ? "s" : ""}
+                    {selectedQuiz.questionCount} вопросов
                   </p>
                 </div>
               )}
@@ -176,12 +175,12 @@ function HostPageContent() {
                   className="w-full"
                 >
                   <Play className="w-4 h-4 mr-2" />
-                  {creating ? "Creating Game..." : "Start Game"}
+                  {creating ? "Создание игры..." : "Начать игру"}
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
-                  This will open two windows: a display window for sharing on
-                  Teams, and a control panel for managing the game.
+                  Откроются два окна: экран для демонстрации в Teams
+                  и панель управления игрой.
                 </p>
               </div>
             </>

@@ -23,7 +23,7 @@ export function DarkModeToggle({
       <Moon className="w-4 h-4 text-muted-foreground" />
       {showLabel && (
         <span className="text-sm text-muted-foreground ml-1">
-          {isDark ? "Dark" : "Light"}
+          {isDark ? "Тёмная" : "Светлая"}
         </span>
       )}
     </div>
