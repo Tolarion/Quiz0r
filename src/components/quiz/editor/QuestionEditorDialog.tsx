@@ -241,15 +241,15 @@ export function QuestionEditorDialog({
           <div className="flex items-start justify-between">
             <DialogHeader className="flex-1">
               <DialogTitle>
-                {editingQuestion ? "Edit" : "Add"} Question
+                {editingQuestion ? "Редактировать" : "Добавить"} вопрос
               </DialogTitle>
               <DialogDescription>
-                Create a multiple choice question with 2-6 answer options.
+                Создайте вопрос с выбором ответа (2–6 вариантов).
               </DialogDescription>
             </DialogHeader>
             <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
               <X className="h-5 w-5" />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">Закрыть</span>
             </DialogClose>
           </div>
         </div>
@@ -298,7 +298,7 @@ export function QuestionEditorDialog({
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
                     <Plus className="w-4 h-4 mr-1" />
-                    Add Translation
+                    Добавить перевод
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -328,11 +328,11 @@ export function QuestionEditorDialog({
             <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
               <div className="space-y-2">
                 <Label htmlFor="questionText">
-                  Question <span className="text-destructive">*</span>
+                  Вопрос <span className="text-destructive">*</span>
                 </Label>
                 <Textarea
                   id="questionText"
-                  placeholder="Enter your question..."
+                  placeholder="Введите вопрос..."
                   value={questionText}
                   onChange={(e) => setQuestionText(e.target.value)}
                   rows={2}
@@ -348,7 +348,7 @@ export function QuestionEditorDialog({
               <div className="space-y-2">
                 <Label>
                   <Image className="w-4 h-4 inline mr-2" />
-                  Image (optional)
+                  Изображение (необязательно)
                 </Label>
 
                 {imageUrl ? (
@@ -388,17 +388,17 @@ export function QuestionEditorDialog({
                       {uploading ? (
                         <div className="flex flex-col items-center text-muted-foreground">
                           <Loader2 className="w-5 h-5 animate-spin mb-1" />
-                          <span className="text-xs">Uploading...</span>
+                          <span className="text-xs">Загрузка...</span>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center text-muted-foreground">
                           <Upload className="w-5 h-5 mb-1" />
-                          <span className="text-xs">Click to upload</span>
+                          <span className="text-xs">Нажмите, чтобы загрузить</span>
                         </div>
                       )}
                     </Button>
                     <Input
-                      placeholder="Or paste URL"
+                      placeholder="Или вставьте URL"
                       value={imageUrl}
                       onChange={(e) => setImageUrl(e.target.value)}
                       className="flex-1"
@@ -408,10 +408,10 @@ export function QuestionEditorDialog({
               </div>
             </div>
 
-            {/* Section 2: Type + Time/Points */}
+            {/* Section 2: Type + Time/Баллы */}
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label>Type</Label>
+                <Label>Тип</Label>
                 <div className="flex gap-2">
                   <Button
                     type="button"
@@ -422,7 +422,7 @@ export function QuestionEditorDialog({
                     className="flex-1"
                     onClick={() => setQuestionType("SINGLE_SELECT")}
                   >
-                    Single
+                    Один
                   </Button>
                   <Button
                     type="button"
@@ -433,13 +433,13 @@ export function QuestionEditorDialog({
                     className="flex-1"
                     onClick={() => setQuestionType("MULTI_SELECT")}
                   >
-                    Multi
+                    Несколько
                   </Button>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="timeLimit">Time (sec)</Label>
+                <Label htmlFor="timeLimit">Время (сек)</Label>
                 <Input
                   id="timeLimit"
                   type="number"
@@ -451,7 +451,7 @@ export function QuestionEditorDialog({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="points">Points</Label>
+                <Label htmlFor="points">Баллы</Label>
                 <Input
                   id="points"
                   type="number"
@@ -468,15 +468,15 @@ export function QuestionEditorDialog({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>
-                  Answers <span className="text-destructive">*</span>
+                  Ответы <span className="text-destructive">*</span>
                   {!hasEnoughAnswers && (
                     <span className="text-xs text-destructive ml-2">
-                      (min 2 required)
+                      (минимум 2)
                     </span>
                   )}
                   {hasEnoughAnswers && !hasCorrectAnswer && (
                     <span className="text-xs text-destructive ml-2">
-                      (mark at least one correct)
+                      (отметьте хотя бы один правильный)
                     </span>
                   )}
                 </Label>
@@ -497,7 +497,7 @@ export function QuestionEditorDialog({
                   <div key={index} className="flex items-center gap-2">
                     <GripVertical className="w-4 h-4 text-muted-foreground shrink-0" />
                     <Input
-                      placeholder={`Answer ${index + 1}`}
+                      placeholder={`Ответ ${index + 1}`}
                       value={answer.answerText}
                       onChange={(e) =>
                         updateAnswer(index, "answerText", e.target.value)
@@ -548,10 +548,10 @@ export function QuestionEditorDialog({
             {/* Section 4: Host Notes + Hint */}
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="hostNotes">Host Notes (optional)</Label>
+                <Label htmlFor="hostNotes">Заметки ведущему (необязательно)</Label>
                 <Textarea
                   id="hostNotes"
-                  placeholder="Notes visible only to the host..."
+                  placeholder="Заметки видны только ведущему..."
                   value={hostNotes}
                   onChange={(e) => setHostNotes(e.target.value)}
                   rows={2}
@@ -569,13 +569,13 @@ export function QuestionEditorDialog({
                   </Label>
                   {hintRequired && (
                     <span className="text-xs text-muted-foreground">
-                      Required (Hint power-up enabled)
+                      Обязательно (включён бонус «Подсказка»)
                     </span>
                   )}
                 </div>
                 <Textarea
                   id="hint"
-                  placeholder="Provide a helpful hint..."
+                  placeholder="Введите полезную подсказку..."
                   value={hint}
                   onChange={(e) => setHint(e.target.value)}
                   rows={2}
@@ -585,7 +585,7 @@ export function QuestionEditorDialog({
                   }`}
                 />
                 <p className="text-xs text-muted-foreground">
-                  {hint.length}/200 characters
+                  {hint.length}/200 символов
                 </p>
               </div>
             </div>
@@ -597,7 +597,7 @@ export function QuestionEditorDialog({
                   variant="ghost"
                   className="w-full justify-between text-muted-foreground"
                 >
-                  <span>Advanced Options</span>
+                  <span>Расширенные настройки</span>
                   {advancedOpen ? (
                     <ChevronUp className="w-4 h-4" />
                   ) : (
@@ -609,9 +609,9 @@ export function QuestionEditorDialog({
                 <div className="p-4 border rounded-lg space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="easterEgg">Easter Egg Button</Label>
+                      <Label htmlFor="easterEgg">Кнопка пасхалки</Label>
                       <p className="text-xs text-muted-foreground">
-                        Add a special button that opens a web page
+                        Добавляет специальную кнопку, открывающую веб-страницу
                       </p>
                     </div>
                     <Switch
@@ -624,10 +624,10 @@ export function QuestionEditorDialog({
                   {easterEggEnabled && (
                     <div className="space-y-3 pl-4 border-l-2">
                       <div className="space-y-2">
-                        <Label htmlFor="easterEggButtonText">Button Text</Label>
+                        <Label htmlFor="easterEggButtonText">Текст кнопки</Label>
                         <Input
                           id="easterEggButtonText"
-                          placeholder="Click for a surprise!"
+                          placeholder="Нажми для сюрприза!"
                           value={easterEggButtonText}
                           onChange={(e) =>
                             setEasterEggButtonText(e.target.value)
@@ -649,7 +649,7 @@ export function QuestionEditorDialog({
 
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label htmlFor="disableScoring">Disable Scoring</Label>
+                          <Label htmlFor="disableScoring">Отключить начисление баллов</Label>
                           <p className="text-xs text-muted-foreground">
                             Players who click won&apos;t earn points
                           </p>
@@ -679,7 +679,7 @@ export function QuestionEditorDialog({
                 >
                   <div className="flex items-center justify-between mb-4">
                     <p className="text-sm text-muted-foreground">
-                      Translate to {SupportedLanguages[lang].name}
+                      Перевод на {SupportedLanguages[lang].name}
                     </p>
                     <div className="flex gap-2">
                       <Button
@@ -691,12 +691,12 @@ export function QuestionEditorDialog({
                         {autoTranslatingQuestion === lang ? (
                           <>
                             <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                            Translating...
+                            Перевод...
                           </>
                         ) : (
                           <>
                             <Sparkles className="w-3 h-3 mr-1" />
-                            Auto-Translate
+                            Автоперевод
                           </>
                         )}
                       </Button>
@@ -708,7 +708,7 @@ export function QuestionEditorDialog({
                         {savingTranslation === lang ? (
                           <Loader2 className="w-3 h-3 animate-spin" />
                         ) : (
-                          "Save"
+                          "Сохранить"
                         )}
                       </Button>
                     </div>
@@ -726,7 +726,7 @@ export function QuestionEditorDialog({
                         }
                       >
                         <Copy className="w-3 h-3 mr-1" />
-                        Copy English
+                        Скопировать оригинал
                       </Button>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
@@ -745,7 +745,7 @@ export function QuestionEditorDialog({
                             e.target.value
                           )
                         }
-                        placeholder={`${SupportedLanguages[lang].name} translation...`}
+                        placeholder={`${SupportedLanguages[lang].name} перевод...`}
                         rows={2}
                         className="text-sm"
                       />
@@ -766,7 +766,7 @@ export function QuestionEditorDialog({
                         }
                       >
                         <Copy className="w-3 h-3 mr-1" />
-                        Copy English
+                        Скопировать оригинал
                       </Button>
                     </div>
                     {answers.map((answer, index) => (
@@ -821,7 +821,7 @@ export function QuestionEditorDialog({
                           }
                         >
                           <Copy className="w-3 h-3 mr-1" />
-                          Copy English
+                          Скопировать оригинал
                         </Button>
                       </div>
                       <div className="grid grid-cols-2 gap-2">
@@ -840,7 +840,7 @@ export function QuestionEditorDialog({
                               e.target.value
                             )
                           }
-                          placeholder={`${SupportedLanguages[lang].name} translation...`}
+                          placeholder={`${SupportedLanguages[lang].name} перевод...`}
                           rows={2}
                           className="text-sm"
                         />
@@ -855,10 +855,10 @@ export function QuestionEditorDialog({
         {/* Footer */}
         <div className="shrink-0 bg-background px-6 py-4 border-t flex justify-end gap-2">
           <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
+            Отмена
           </Button>
           <Button onClick={onSave} disabled={!canSave}>
-            {editingQuestion ? "Save Changes" : "Add Question"}
+            {editingQuestion ? "Сохранить Changes" : "Добавить вопрос"}
           </Button>
         </div>
       </DialogContent>

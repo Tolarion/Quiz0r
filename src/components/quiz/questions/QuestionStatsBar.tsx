@@ -30,6 +30,21 @@ export function QuestionStatsBar({
   hintPowerUpEnabled,
   translationStatuses,
 }: QuestionStatsBarProps) {
+  const formatQuestionWord = (count: number) => {
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+    if (mod10 === 1 && mod100 !== 11) return "вопрос";
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return "вопроса";
+    return "вопросов";
+  };
+  const formatSectionWord = (count: number) => {
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+    if (mod10 === 1 && mod100 !== 11) return "раздел";
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return "раздела";
+    return "разделов";
+  };
+
   const stats = useMemo(() => {
     const actualQuestions = questions.filter((q) => q.questionType !== "SECTION");
     const sections = questions.filter((q) => q.questionType === "SECTION");
@@ -71,12 +86,12 @@ export function QuestionStatsBar({
         {/* Question & Section Count */}
         <div className="flex items-center gap-1.5">
           <span className="font-medium text-foreground">{stats.questionCount}</span>
-          <span>question{stats.questionCount !== 1 ? "s" : ""}</span>
+          <span>{formatQuestionWord(stats.questionCount)}</span>
           {stats.sectionCount > 0 && (
             <>
               <span>·</span>
               <span className="font-medium text-foreground">{stats.sectionCount}</span>
-              <span>section{stats.sectionCount !== 1 ? "s" : ""}</span>
+              <span>{formatSectionWord(stats.sectionCount)}</span>
             </>
           )}
         </div>
@@ -88,13 +103,13 @@ export function QuestionStatsBar({
           <TooltipTrigger asChild>
             <div className="flex items-center gap-1.5 cursor-help">
               <Clock className="w-3.5 h-3.5" />
-              <span>~{stats.estimatedMinutes} min</span>
+              <span>~{stats.estimatedMinutes} мин</span>
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Estimated quiz duration</p>
+            <p>Оценочная длительность викторины</p>
             <p className="text-xs text-muted-foreground">
-              {stats.totalTime}s total question time + transitions
+              {stats.totalTime}s суммарное время на вопросы + переходы
             </p>
           </TooltipContent>
         </Tooltip>
@@ -110,7 +125,7 @@ export function QuestionStatsBar({
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Maximum possible points</p>
+            <p>Максимально возможные очки</p>
           </TooltipContent>
         </Tooltip>
 
@@ -132,20 +147,16 @@ export function QuestionStatsBar({
                   )}
                   <HelpCircle className="w-3.5 h-3.5" />
                   <span>
-                    Hints: {stats.hintCoverage.current}/{stats.hintCoverage.total}
+                    Подсказки: {stats.hintCoverage.current}/{stats.hintCoverage.total}
                   </span>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
                 {stats.hintCoverage.complete ? (
-                  <p>All questions have hints</p>
+                  <p>У всех вопросов есть подсказки</p>
                 ) : (
                   <p>
-                    {stats.hintCoverage.total - stats.hintCoverage.current} question
-                    {stats.hintCoverage.total - stats.hintCoverage.current !== 1
-                      ? "s"
-                      : ""}{" "}
-                    missing hints
+                    {stats.hintCoverage.total - stats.hintCoverage.current} {formatQuestionWord(stats.hintCoverage.total - stats.hintCoverage.current)} без подсказок
                   </p>
                 )}
               </TooltipContent>
@@ -179,7 +190,7 @@ export function QuestionStatsBar({
                 <div className="space-y-1">
                   {completedTranslations.length > 0 && (
                     <p className="text-green-500">
-                      Complete:{" "}
+                      Полностью:{" "}
                       {completedTranslations
                         .map((t) => SupportedLanguages[t.languageCode]?.name)
                         .join(", ")}
@@ -187,7 +198,7 @@ export function QuestionStatsBar({
                   )}
                   {partialTranslations.length > 0 && (
                     <p className="text-amber-500">
-                      Partial:{" "}
+                      Частично:{" "}
                       {partialTranslations
                         .map((t) => SupportedLanguages[t.languageCode]?.name)
                         .join(", ")}

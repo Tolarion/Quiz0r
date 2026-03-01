@@ -138,7 +138,7 @@ export function QuestionCard({
                 <CardDescription className="flex flex-wrap items-center gap-2 mt-1">
                   {isSection ? (
                     <>
-                      <span className="text-primary font-medium">Section</span>
+                      <span className="text-primary font-medium">Раздел</span>
                       {question.hostNotes && (
                         <>
                           <span>·</span>
@@ -152,13 +152,13 @@ export function QuestionCard({
                     <>
                       <span>
                         {question.questionType === "MULTI_SELECT"
-                          ? "Multi Select"
-                          : "Single Select"}
+                          ? "Несколько ответов"
+                          : "Один ответ"}
                       </span>
                       <span>·</span>
                       <span>{question.timeLimit}s</span>
                       <span>·</span>
-                      <span>{question.points} pts</span>
+                      <span>{question.points} балл.</span>
                     </>
                   )}
                   {question.imageUrl && (
@@ -166,7 +166,7 @@ export function QuestionCard({
                       <span>·</span>
                       <span className="flex items-center">
                         <Image className="w-3 h-3 mr-1" />
-                        Image
+                        Изображение
                       </span>
                     </>
                   )}
@@ -180,7 +180,7 @@ export function QuestionCard({
                         title={`${SupportedLanguages[lang]?.name || lang} translation complete`}
                       >
                         <span>{SupportedLanguages[lang]?.flag}</span>
-                        <span>Full</span>
+                        <span>Полный</span>
                       </span>
                     ))}
                     {partialLanguages.map((lang) => (
@@ -190,7 +190,7 @@ export function QuestionCard({
                         title={`${SupportedLanguages[lang]?.name || lang} translation incomplete`}
                       >
                         <span>{SupportedLanguages[lang]?.flag}</span>
-                        <span>Partial</span>
+                        <span>Частичный</span>
                       </span>
                     ))}
                   </div>
@@ -208,7 +208,7 @@ export function QuestionCard({
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Hint required but missing</p>
+                      <p>Подсказка обязательна, но не заполнена</p>
                     </TooltipContent>
                   </Tooltip>
                 )}
@@ -222,10 +222,10 @@ export function QuestionCard({
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Some translations incomplete</p>
+                      <p>Некоторые переводы не завершены</p>
                       {completeLanguages.length > 0 && (
                         <p className="text-xs text-muted-foreground">
-                          Complete:{" "}
+                          Готово:{" "}
                           {completeLanguages
                             .map((l) => SupportedLanguages[l]?.flag)
                             .join(" ")}
@@ -233,7 +233,7 @@ export function QuestionCard({
                       )}
                       {partialLanguages.length > 0 && (
                         <p className="text-xs text-muted-foreground">
-                          Needs work:{" "}
+                          Нужно доработать:{" "}
                           {partialLanguages
                             .map((l) => SupportedLanguages[l]?.flag)
                             .join(" ")}
@@ -262,7 +262,7 @@ export function QuestionCard({
                         </div>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>Translations complete</p>
+                        <p>Переводы завершены</p>
                         <p className="text-xs text-muted-foreground">
                           {completeLanguages
                             .map((l) => SupportedLanguages[l]?.name)
@@ -272,7 +272,7 @@ export function QuestionCard({
                     </Tooltip>
                   )}
 
-                {/* Duplicate Button */}
+                {/* Дублировать Button */}
                 {!isSection && (
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -285,11 +285,11 @@ export function QuestionCard({
                         <Copy className="w-4 h-4" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>Duplicate</TooltipContent>
+                    <TooltipContent>Дублировать</TooltipContent>
                   </Tooltip>
                 )}
 
-                {/* Edit Button */}
+                {/* Редактировать Button */}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -301,10 +301,10 @@ export function QuestionCard({
                       <Pencil className="w-4 h-4" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Edit</TooltipContent>
+                  <TooltipContent>Редактировать</TooltipContent>
                 </Tooltip>
 
-                {/* Delete Button */}
+                {/* Удалить Button */}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -316,7 +316,7 @@ export function QuestionCard({
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Delete</TooltipContent>
+                  <TooltipContent>Удалить</TooltipContent>
                 </Tooltip>
               </div>
             </div>

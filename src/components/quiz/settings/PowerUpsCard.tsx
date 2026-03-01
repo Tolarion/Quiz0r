@@ -58,19 +58,27 @@ export function PowerUpsCard({
 }: PowerUpsCardProps) {
   const showHintWarning = hintCount > 0 && questionsWithoutHints > 0;
 
+  const formatQuestionCount = (count: number) => {
+    const mod10 = count % 10;
+    const mod100 = count % 100;
+    if (mod10 === 1 && mod100 !== 11) return `${count} вопрос`;
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return `${count} вопроса`;
+    return `${count} вопросов`;
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 text-sm font-medium">
         <Zap className="w-4 h-4" />
-        Power-ups
+        Бонусы
       </div>
 
       <div className="space-y-3">
-        {/* Hint Power-up */}
+        {/* Подсказка Power-up */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1 min-w-0">
             <Lightbulb className="w-4 h-4 text-blue-500 shrink-0" />
-            <Label className="text-sm font-normal truncate">Hint</Label>
+            <Label className="text-sm font-normal truncate">Подсказка</Label>
           </div>
           <Stepper
             value={hintCount}
@@ -78,11 +86,11 @@ export function PowerUpsCard({
           />
         </div>
 
-        {/* Copy Answer Power-up */}
+        {/* Скопировать ответ Power-up */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1 min-w-0">
             <Users className="w-4 h-4 text-purple-500 shrink-0" />
-            <Label className="text-sm font-normal truncate">Copy Answer</Label>
+            <Label className="text-sm font-normal truncate">Скопировать ответ</Label>
           </div>
           <Stepper
             value={copyAnswerCount}
@@ -90,11 +98,11 @@ export function PowerUpsCard({
           />
         </div>
 
-        {/* Double Points Power-up */}
+        {/* Двойные очки Power-up */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-1 min-w-0">
             <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
-            <Label className="text-sm font-normal truncate">Double Points</Label>
+            <Label className="text-sm font-normal truncate">Двойные очки</Label>
           </div>
           <Stepper
             value={doublePointsCount}
@@ -103,12 +111,12 @@ export function PowerUpsCard({
         </div>
       </div>
 
-      {/* Hint Warning */}
+      {/* Подсказка Warning */}
       {showHintWarning && (
         <div className="flex items-start gap-2 p-2 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-md">
           <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
           <p className="text-xs text-amber-700 dark:text-amber-300">
-            {questionsWithoutHints} question{questionsWithoutHints !== 1 ? "s" : ""} need hints
+            {formatQuestionCount(questionsWithoutHints)} без подсказок
           </p>
         </div>
       )}
