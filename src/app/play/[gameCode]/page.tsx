@@ -140,13 +140,13 @@ export default function PlayerGamePage({
     // Validate file type
     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
-      setJoinError("Invalid file type. Use JPEG, PNG, GIF, or WebP");
+      setJoinError("Недопустимый тип файла. Используйте JPEG, PNG, GIF или WebP");
       return;
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setJoinError("Image too large. Maximum size is 5MB");
+      setJoinError("Изображение слишком большое. Максимальный размер — 5 МБ");
       return;
     }
 
@@ -169,10 +169,10 @@ export default function PlayerGamePage({
         setSelectedEmoji(null); // Clear emoji when image is selected
       } else {
         const data = await res.json();
-        setJoinError(data.error || "Failed to upload image");
+        setJoinError(data.error || "Не удалось загрузить изображение");
       }
     } catch {
-      setJoinError("Failed to upload image");
+      setJoinError("Не удалось загрузить изображение");
     } finally {
       setUploadingImage(false);
     }
@@ -336,7 +336,7 @@ export default function PlayerGamePage({
         playerId: resolvedPlayerId,
         playerName,
         languageCode: selectedLanguage,
-        message: "Game cancelled by host",
+        message: "Игра отменена ведущим",
         isActive: false,
       };
     }
@@ -347,7 +347,7 @@ export default function PlayerGamePage({
         playerId: resolvedPlayerId,
         playerName,
         languageCode: selectedLanguage,
-        message: removalReason || "You have been removed from the game",
+        message: removalReason || "Вы были удалены из игры",
         isActive: false,
       };
     }
@@ -358,7 +358,7 @@ export default function PlayerGamePage({
         playerId: resolvedPlayerId,
         playerName,
         languageCode: selectedLanguage,
-        message: "Connecting...",
+        message: "Подключение...",
         isActive: !!playerInfo?.isActive,
       };
     }
@@ -483,12 +483,12 @@ export default function PlayerGamePage({
 
     const name = playerName.trim();
     if (!name) {
-      setJoinError("Please enter your name");
+      setJoinError("Пожалуйста, введите имя");
       return;
     }
 
     if (name.length > 20) {
-      setJoinError("Name must be 20 characters or less");
+      setJoinError("Имя должно быть не длиннее 20 символов");
       return;
     }
 
@@ -512,11 +512,11 @@ export default function PlayerGamePage({
         if (data.status === "pending") {
           setJoined(true);
         } else {
-          setJoinError(data.error || "Failed to join game");
+          setJoinError(data.error || "Не удалось присоединиться к игре");
         }
       }
     } catch {
-      setJoinError("Failed to join game");
+      setJoinError("Не удалось присоединиться к игре");
     } finally {
       setJoining(false);
     }
@@ -667,11 +667,11 @@ export default function PlayerGamePage({
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2 border-yellow-500">
             <CardContent className="pt-6 text-center">
               <Bell className="w-12 h-12 mx-auto text-yellow-500 mb-4" />
-              <p className="text-lg font-bold mb-2">Waiting for Admission</p>
+              <p className="text-lg font-bold mb-2">Ожидание допуска</p>
               <p className="text-muted-foreground">
                 {playerRemoved
-                  ? "You were removed from this game. Your request to rejoin is pending host approval."
-                  : "Your request to join is pending host approval."}
+                  ? "Вы были удалены из этой игры. Запрос на повторное подключение ожидает одобрения ведущего."
+                  : "Ваш запрос на подключение ожидает одобрения ведущего."}
               </p>
               <div className="mt-4 flex items-center justify-center gap-2">
                 <div className="animate-pulse flex gap-1">
@@ -703,16 +703,16 @@ export default function PlayerGamePage({
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2 border-destructive">
             <CardContent className="pt-6 text-center">
               <UserX className="w-12 h-12 mx-auto text-destructive mb-4" />
-              <p className="text-lg font-bold text-destructive mb-2">Admission Refused</p>
+              <p className="text-lg font-bold text-destructive mb-2">Доступ отклонён</p>
               <p className="text-muted-foreground">
-                The host has refused your request to join this game. Please contact the game host.
+                Ведущий отклонил ваш запрос на подключение к этой игре. Пожалуйста, свяжитесь с ведущим.
               </p>
               <Button
                 onClick={() => router.push("/play")}
                 className="mt-6"
                 variant="outline"
               >
-                Join Another Game
+                Присоединиться к другой игре
               </Button>
             </CardContent>
           </Card>
@@ -737,16 +737,16 @@ export default function PlayerGamePage({
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2 border-destructive">
             <CardContent className="pt-6 text-center">
               <X className="w-12 h-12 mx-auto text-destructive mb-4" />
-              <p className="text-lg font-bold text-destructive mb-2">Removed from Game</p>
+              <p className="text-lg font-bold text-destructive mb-2">Удалён из игры</p>
               <p className="text-muted-foreground">
-                {removalReason || "You have been removed from the game. Please contact the game host."}
+                {removalReason || "Вы были удалены из игры. Пожалуйста, свяжитесь с ведущим."}
               </p>
               <Button
                 onClick={() => router.push("/play")}
                 className="mt-6"
                 variant="outline"
               >
-                Join Another Game
+                Присоединиться к другой игре
               </Button>
             </CardContent>
           </Card>
@@ -774,7 +774,7 @@ export default function PlayerGamePage({
               <p className="text-lg font-medium">Game Cancelled</p>
               <p className="text-muted-foreground mt-2">The host has cancelled this game.</p>
               <Button onClick={() => router.push("/play")} className="mt-4">
-                Join Another Game
+                Присоединиться к другой игре
               </Button>
             </CardContent>
           </Card>
@@ -881,7 +881,7 @@ export default function PlayerGamePage({
                 This game is no longer accepting new players.
               </p>
               <Button onClick={() => router.push("/play")} className="mt-4">
-                Join Another Game
+                Присоединиться к другой игре
               </Button>
             </CardContent>
           </Card>
