@@ -81,16 +81,16 @@ export default function QuizThemeApplyPage({ params }: Props) {
     const base: ThemeOption[] = [
       {
         id: "none",
-        name: "Use default",
-        description: "Fallback styling of the app",
+        name: "Тема по умолчанию",
+        description: "Базовое оформление приложения",
         source: "none",
         themeJson: null,
         preview: DEFAULT_THEME,
       },
       {
         id: "default",
-        name: "Default theme",
-        description: "App base styling",
+        name: "Тема по умолчанию",
+        description: "Базовое оформление приложения",
         source: "builtin",
         themeJson: stringifyTheme(DEFAULT_THEME),
         preview: DEFAULT_THEME,
@@ -106,7 +106,7 @@ export default function QuizThemeApplyPage({ params }: Props) {
       ...customThemes.map((theme) => ({
         id: theme.id,
         name: theme.name,
-        description: theme.description || "Custom theme",
+        description: theme.description || "Пользовательская тема",
         source: "custom" as const,
         themeJson: theme.theme,
         preview: parseTheme(theme.theme) || DEFAULT_THEME,
@@ -119,8 +119,8 @@ export default function QuizThemeApplyPage({ params }: Props) {
         const parsed = parseTheme(currentThemeJson);
         base.push({
           id: "custom-current",
-          name: parsed?.name || "Current theme",
-          description: "Currently applied to this quiz",
+          name: parsed?.name || "Текущая тема",
+          description: "Сейчас применяется в этом квизе",
           source: "custom",
           themeJson: currentThemeJson,
           preview: parsed || DEFAULT_THEME,
@@ -160,11 +160,11 @@ export default function QuizThemeApplyPage({ params }: Props) {
         router.push(`/admin/quiz/${quizId}/questions`);
       } else {
         const data = await res.json();
-        setError(data.error || "Failed to apply theme");
+        setError(data.error || "Не удалось применить тему");
       }
     } catch (err) {
       console.error("Failed to apply theme:", err);
-      setError("Failed to apply theme");
+      setError("Не удалось применить тему");
     } finally {
       setSaving(false);
     }
@@ -192,7 +192,7 @@ export default function QuizThemeApplyPage({ params }: Props) {
             <div>
               <h1 className="text-xl font-bold flex items-center gap-2">
                 <Palette className="w-5 h-5" />
-                Apply Theme
+                Применить тему
               </h1>
               <p className="text-sm text-muted-foreground">{quizTitle}</p>
             </div>
@@ -201,7 +201,7 @@ export default function QuizThemeApplyPage({ params }: Props) {
             <Link href="/admin/themes">
               <Button variant="outline">
                 <Plus className="w-4 h-4 mr-2" />
-                Manage Themes
+                Библиотека тем
               </Button>
             </Link>
             <Button onClick={applyTheme} disabled={saving}>
@@ -210,7 +210,7 @@ export default function QuizThemeApplyPage({ params }: Props) {
               ) : (
                 <Check className="w-4 h-4 mr-2" />
               )}
-              Apply Theme
+              Применить тему
             </Button>
           </div>
         </div>
@@ -221,9 +221,9 @@ export default function QuizThemeApplyPage({ params }: Props) {
           <div className="lg:col-span-2 space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Select a Theme</CardTitle>
+                <CardTitle>Выберите тему</CardTitle>
                 <CardDescription>
-                  Choose from built-in presets or your saved custom themes
+                  Выберите встроенную тему или одну из сохраненных пользовательских
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -241,7 +241,7 @@ export default function QuizThemeApplyPage({ params }: Props) {
                       {option.description}
                     </p>
                     <p className="text-[11px] uppercase tracking-wide text-muted-foreground mt-1">
-                      {option.source === "builtin" ? "Built-in" : option.source === "custom" ? "Custom" : "Default"}
+                      {option.source === "builtin" ? "Встроенная" : option.source === "custom" ? "Пользовательская" : "По умолчанию"}
                     </p>
                   </button>
                 ))}
@@ -253,12 +253,12 @@ export default function QuizThemeApplyPage({ params }: Props) {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Preview</h2>
+            <h2 className="text-lg font-semibold">Предпросмотр темы</h2>
             <ThemePreview theme={selectedOption?.preview || DEFAULT_THEME} />
             <p className="text-sm text-muted-foreground">
               {selectedOption?.preview
-                ? `Previewing: ${selectedOption.preview.name}`
-                : "Using default theme"}
+                ? `Предпросмотр: ${selectedOption.preview.name}`
+                : "Используется тема по умолчанию"}
             </p>
           </div>
         </div>

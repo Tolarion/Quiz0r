@@ -77,7 +77,12 @@ export default function ThemeLibraryPage() {
   }
 
   const builtInThemes = [
-    { id: "default", name: "Default", description: "App base styling", theme: DEFAULT_THEME },
+    {
+      id: "default",
+      name: "Тема по умолчанию",
+      description: "Базовое оформление приложения",
+      theme: DEFAULT_THEME,
+    },
     ...PRESET_LIST.map((preset) => ({
       id: preset.id,
       name: preset.name,
@@ -92,16 +97,16 @@ export default function ThemeLibraryPage() {
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2">
             <Palette className="w-6 h-6" />
-            Theme Library
+            Библиотека тем
           </h1>
           <p className="text-muted-foreground mt-1">
-            Preview, create, and edit themes. Apply them inside each quiz.
+            Просматривайте, создавайте и редактируйте темы для ваших квизов.
           </p>
         </div>
         <Link href="/admin/themes/new">
           <Button>
             <Plus className="w-4 h-4 mr-2" />
-            Create Theme
+            Создать тему
           </Button>
         </Link>
       </div>
@@ -109,8 +114,8 @@ export default function ThemeLibraryPage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Built-in Themes</CardTitle>
-            <CardDescription>Ready-made themes you can apply to any quiz</CardDescription>
+            <CardTitle>Встроенные темы</CardTitle>
+            <CardDescription>Готовые темы, которые можно применить к любому квизу</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-2">
             {builtInThemes.map((theme) => (
@@ -124,7 +129,7 @@ export default function ThemeLibraryPage() {
                   <p className="text-xs text-muted-foreground">{theme.description}</p>
                 </div>
                 <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                  Built-in
+                  Встроенная
                 </span>
               </div>
             ))}
@@ -133,20 +138,20 @@ export default function ThemeLibraryPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Custom Themes</CardTitle>
+            <CardTitle>Пользовательские темы</CardTitle>
             <CardDescription>
-              Themes created with the AI wizard or manual JSON editing
+              Темы, созданные через мастер ИИ или вручную в редакторе JSON
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {loading ? (
               <div className="flex items-center justify-center py-6 text-muted-foreground">
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Loading themes...
+                Загружаем темы...
               </div>
             ) : customThemes.length === 0 ? (
               <div className="rounded-lg border border-dashed p-6 text-center text-muted-foreground">
-                No custom themes yet. Click &quot;Create Theme&quot; to get started.
+                Пока нет пользовательских тем. Нажмите «Создать тему», чтобы начать.
               </div>
             ) : (
               <div className="grid gap-3 sm:grid-cols-2">
@@ -166,7 +171,7 @@ export default function ThemeLibraryPage() {
                         <div className="flex-1 min-w-0">
                           <p className="font-medium truncate">{theme.name}</p>
                           <p className="text-xs text-muted-foreground line-clamp-2">
-                            {theme.description || "Custom theme"}
+                            {theme.description || "Пользовательская тема"}
                           </p>
                         </div>
                         <div className="flex gap-2">
@@ -197,20 +202,20 @@ export default function ThemeLibraryPage() {
       <AlertDialog open={!!themeToDelete} onOpenChange={(open) => !open && setThemeToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete this theme?</AlertDialogTitle>
+            <AlertDialogTitle>Удалить тему?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove the theme <strong>{themeToDelete?.name}</strong>. Quizzes using it will fall
-              back to the default styling.
+              Тема <strong>{themeToDelete?.name}</strong> будет удалена без возможности восстановления. В квизах, где
+              она использовалась, автоматически применится тема по умолчанию.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={!!deletingId}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={!!deletingId}>Отмена</AlertDialogCancel>
             <AlertDialogAction
               onClick={deleteTheme}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={!!deletingId}
             >
-              {deletingId ? "Deleting..." : "Delete Theme"}
+              {deletingId ? "Удаляем..." : "Удалить тему"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
