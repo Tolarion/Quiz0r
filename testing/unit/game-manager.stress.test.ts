@@ -67,7 +67,7 @@ describe("GameManager stress test", () => {
             ],
             translations: [],
             hostNotes: null,
-            hint: null,
+            hint: "Текст подсказки для проверки",
             imageUrl: null,
             easterEggEnabled: false,
             easterEggButtonText: null,
@@ -85,6 +85,24 @@ describe("GameManager stress test", () => {
 
   afterEach(() => {
     vi.useRealTimers();
+  });
+
+
+  it("includes hint text in question payload after game start", async () => {
+    const io = createMockIo();
+    const manager = new GameManager(io as any);
+
+    const hostSocket = createMockSocket("host-hint");
+    io.registerSocket(hostSocket);
+
+    await (manager as any).handleStartGame(hostSocket as any, { gameCode: "ABC123" });
+
+    const questionStartEvents = (io.emitted.get("game:ABC123") || []).filter(
+      (e) => e.event === "game:questionStart"
+    );
+
+    expect(questionStartEvents.length).toBeGreaterThan(0);
+    expect(questionStartEvents[0].payload.question.hint).toBe("Текст подсказки для проверки");
   });
 
   it("handles 50 concurrent player joins and answers", async () => {

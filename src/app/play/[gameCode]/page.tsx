@@ -1393,7 +1393,7 @@ export default function PlayerGamePage({
               <div className="flex flex-col gap-2 rounded-xl bg-card/80 backdrop-blur-sm border border-border/60 px-4 py-3 shadow-lg">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-muted-foreground">
-                    Question {gameState.currentQuestionNumber} of {gameState.totalQuestions}
+                    Вопрос {gameState.currentQuestionNumber} из {gameState.totalQuestions}
                   </span>
                   <div className={`
                     flex items-center gap-2 px-3 py-1 rounded-full font-bold text-lg tabular-nums
@@ -1404,7 +1404,7 @@ export default function PlayerGamePage({
                         : "bg-primary/20 text-primary"}
                   `}>
                     <AlarmClock className="w-4 h-4" />
-                    {timeRemaining}s
+                    {timeRemaining} сек
                   </div>
                 </div>
                 {effectiveCurrentQuestion && (
