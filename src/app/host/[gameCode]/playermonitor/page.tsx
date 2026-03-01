@@ -51,7 +51,7 @@ export default function PlayerMonitorPage({
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex items-center gap-3 text-muted-foreground">
           <Loader2 className="w-5 h-5 animate-spin" />
-          <span>Connecting to player monitor...</span>
+          <span>Подключение к монитору игроков...</span>
         </div>
       </div>
     );
@@ -66,18 +66,18 @@ export default function PlayerMonitorPage({
               <Eye className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Game #{gameCode.toUpperCase()}</p>
-              <h1 className="text-xl font-semibold">Player Monitor</h1>
+              <p className="text-sm text-muted-foreground">Игра №{gameCode.toUpperCase()}</p>
+              <h1 className="text-xl font-semibold">Монитор игроков</h1>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="gap-1">
               <Users className="w-4 h-4" />
-              {viewsArray.length} players
+              {viewsArray.length} игроков
             </Badge>
             <Button variant="outline" size="sm" onClick={requestPlayerViews} className="gap-2">
               <Monitor className="w-4 h-4" />
-              Refresh
+              Обновить
             </Button>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function PlayerMonitorPage({
       <div className="container mx-auto px-4 py-6">
         {viewsArray.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border/70 bg-card/70 p-10 text-center text-muted-foreground">
-            Waiting for players to join... keep this window open to see live previews.
+            Ожидаем подключения игроков... оставьте это окно открытым, чтобы видеть превью в реальном времени.
           </div>
         ) : (
           <>
@@ -112,14 +112,14 @@ export default function PlayerMonitorPage({
               </Badge>
               <Button variant="secondary" size="sm" onClick={() => setExpanded(null)} className="gap-2">
                 <X className="w-4 h-4" />
-                Close
+                Закрыть
               </Button>
             </div>
             <div className="relative aspect-[16/9] bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10">
               {expanded.screenshot ? (
                 <img
                   src={expanded.screenshot}
-                  alt={`${expanded.playerName} monitor`}
+                  alt={`Монитор игрока ${expanded.playerName}`}
                   className="absolute inset-0 h-full w-full object-contain bg-black"
                 />
               ) : (
@@ -128,7 +128,7 @@ export default function PlayerMonitorPage({
                 </div>
               )}
               <div className="absolute left-4 bottom-4 bg-black/55 backdrop-blur px-3 py-2 rounded-lg text-white">
-                <p className="text-xs uppercase tracking-[0.2em] text-white/60">Player</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-white/60">Игрок</p>
                 <p className="text-lg font-semibold">{expanded.playerName}</p>
               </div>
             </div>
@@ -159,7 +159,7 @@ function PlayerPreview({ view, onExpand }: { view: PlayerViewState; onExpand: ()
         {view.screenshot ? (
           <img
             src={view.screenshot}
-            alt={`${view.playerName} screen`}
+            alt={`Экран игрока ${view.playerName}`}
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
@@ -170,7 +170,7 @@ function PlayerPreview({ view, onExpand }: { view: PlayerViewState; onExpand: ()
         <div className="absolute inset-0 pointer-events-none" />
         <div className="absolute inset-x-0 bottom-0 p-3 flex items-center justify-between bg-gradient-to-t from-black/60 via-black/20 to-transparent">
           <div className="bg-black/50 backdrop-blur px-3 py-1.5 rounded-lg">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/60">Player</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-white/60">Игрок</p>
             <p className="text-sm font-semibold text-white">{view.playerName}</p>
           </div>
           <div className="flex items-center gap-2">
@@ -190,12 +190,12 @@ function PlayerPreview({ view, onExpand }: { view: PlayerViewState; onExpand: ()
         </div>
       </div>
       <div className="border-t px-4 py-3 flex items-center justify-between text-xs text-muted-foreground bg-muted/40">
-        <span>Status: {view.isActive === false ? "Inactive" : "Active"}</span>
+        <span>Статус: {view.isActive === false ? "Неактивен" : "Активен"}</span>
         {view.answerResult && (
           <span className="inline-flex items-center gap-1">
-            {view.answerResult.correct ? "Answered" : "Missed"}
+            {view.answerResult.correct ? "Ответил" : "Пропустил"}
             <span className="font-semibold text-foreground">
-              +{view.answerResult.points} pts
+              +{view.answerResult.points} очк.
             </span>
           </span>
         )}
@@ -207,47 +207,49 @@ function PlayerPreview({ view, onExpand }: { view: PlayerViewState; onExpand: ()
 function stageLabel(stage: PlayerViewState["stage"]) {
   switch (stage) {
     case "waiting":
-      return "Lobby";
+      return "Лобби";
     case "section":
-      return "Section";
+      return "Раздел";
     case "question":
-      return "Question";
+      return "Вопрос";
     case "awaiting-reveal":
-      return "Awaiting Reveal";
+      return "Ожидание показа";
     case "reveal":
-      return "Reveal";
+      return "Показ";
     case "scoreboard":
-      return "Scoreboard";
+      return "Таблица результатов";
     case "finished":
-      return "Finished";
+      return "Завершено";
     case "cancelled":
-      return "Cancelled";
+      return "Отменено";
     case "removed":
-      return "Removed";
+      return "Удалён";
     default:
-      return "Connecting";
+      return "Подключение";
   }
 }
 
 function emptyMessageForStage(stage: PlayerViewState["stage"]) {
   switch (stage) {
     case "waiting":
-      return "In lobby";
+      return "В лобби";
     case "section":
-      return "Viewing section slide";
+      return "Просматривает слайд раздела";
+    case "question":
+      return "Отвечает на вопрос";
     case "awaiting-reveal":
-      return "Waiting for reveal";
+      return "Ожидает показа";
     case "reveal":
-      return "Reviewing answers";
+      return "Просматривает ответы";
     case "scoreboard":
-      return "Viewing scoreboard";
+      return "Просматривает таблицу результатов";
     case "finished":
-      return "Game finished";
+      return "Игра завершена";
     case "cancelled":
-      return "Game cancelled";
+      return "Игра отменена";
     case "removed":
-      return "Removed by host";
+      return "Удалён ведущим";
     default:
-      return "Waiting for state";
+      return "Ожидание состояния";
   }
 }
