@@ -15,14 +15,14 @@ export function QuestionEmptyState({ onAddQuestion }: QuestionEmptyStateProps) {
         <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
           <FileQuestion className="w-8 h-8 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-medium mb-2">No questions yet</h3>
+        <h3 className="text-lg font-medium mb-2">Пока нет вопросов</h3>
         <p className="text-muted-foreground text-sm text-center mb-6 max-w-sm">
-          Start building your quiz by adding your first question. You can also
-          add sections to organize your questions into groups.
+          Начните собирать викторину с первого вопроса. Вы также можете
+          добавлять разделы, чтобы группировать вопросы.
         </p>
         <Button onClick={onAddQuestion}>
           <Plus className="w-4 h-4 mr-2" />
-          Add Your First Question
+          Добавить первый вопрос
         </Button>
       </CardContent>
     </Card>

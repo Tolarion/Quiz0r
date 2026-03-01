@@ -25,7 +25,7 @@ import { QuestionStatsBar } from "./QuestionStatsBar";
 import type { TranslationStatus } from "@/types";
 import { Badge } from "@/components/ui/badge";
 
-interface Question {
+interface Вопрос {
   id: string;
   questionText: string;
   questionType: string;
@@ -38,7 +38,7 @@ interface Quiz {
   id: string;
   title: string;
   hintCount: number;
-  questions: Question[];
+  questions: Вопрос[];
   aiGenerated?: boolean;
 }
 
@@ -83,7 +83,7 @@ export function QuestionListHeader({
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Quizzes
+            Назад к викторинам
           </Link>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-bold">{quiz.title}</h1>
@@ -98,7 +98,7 @@ export function QuestionListHeader({
                   <Pencil className="w-4 h-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Edit title & description</TooltipContent>
+              <TooltipContent>Редактировать название и описание</TooltipContent>
             </Tooltip>
             {quiz.aiGenerated && (
               <Badge
@@ -124,7 +124,7 @@ export function QuestionListHeader({
                   </Button>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent>Theme</TooltipContent>
+              <TooltipContent>Тема</TooltipContent>
             </Tooltip>
 
             <Tooltip>
@@ -138,7 +138,7 @@ export function QuestionListHeader({
                   <Languages className="w-4 h-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Translations</TooltipContent>
+              <TooltipContent>Переводы</TooltipContent>
             </Tooltip>
 
             <Tooltip>
@@ -157,7 +157,7 @@ export function QuestionListHeader({
                   )}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Export Quiz</TooltipContent>
+              <TooltipContent>Экспорт викторины</TooltipContent>
             </Tooltip>
           </div>
 
@@ -168,18 +168,18 @@ export function QuestionListHeader({
             <Link href={`/host?quizId=${quiz.id}`}>
               <Button disabled={!canPlay} size="sm">
                 <Play className="w-4 h-4 mr-1" />
-                <span className="hidden sm:inline">Play</span>
+                <span className="hidden sm:inline">Запустить</span>
               </Button>
             </Link>
 
             <Button variant="outline" size="sm" onClick={onAddSection}>
               <Layers className="w-4 h-4 sm:mr-1" />
-              <span className="hidden sm:inline">Section</span>
+              <span className="hidden sm:inline">Раздел</span>
             </Button>
 
             <Button size="sm" onClick={onAddQuestion}>
               <Plus className="w-4 h-4 sm:mr-1" />
-              <span className="hidden sm:inline">Question</span>
+              <span className="hidden sm:inline">Вопрос</span>
             </Button>
 
             <Tooltip>
@@ -193,7 +193,7 @@ export function QuestionListHeader({
                   <Settings className="w-4 h-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Settings</TooltipContent>
+              <TooltipContent>Настройки</TooltipContent>
             </Tooltip>
           </div>
         </div>

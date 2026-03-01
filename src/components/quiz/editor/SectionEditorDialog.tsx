@@ -128,15 +128,15 @@ export function SectionEditorDialog({
           <div className="flex items-start justify-between">
             <DialogHeader className="flex-1">
               <DialogTitle>
-                {editingSection ? "Edit" : "Add"} Section
+                {editingSection ? "Редактировать" : "Добавить"} раздел
               </DialogTitle>
               <DialogDescription>
-                Sections help organize your quiz into logical groups.
+                Разделы помогают структурировать викторину по логическим блокам.
               </DialogDescription>
             </DialogHeader>
             <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
               <X className="h-5 w-5" />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">Закрыть</span>
             </DialogClose>
           </div>
         </div>
@@ -185,7 +185,7 @@ export function SectionEditorDialog({
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm">
                       <Plus className="w-4 h-4 mr-1" />
-                      Add Translation
+                      Добавить перевод
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
@@ -211,25 +211,25 @@ export function SectionEditorDialog({
 
             {/* English (original) tab */}
             <TabsContent value="en" className="space-y-4 mt-0">
-              {/* Section Title */}
+              {/* Section Название */}
               <div className="space-y-2">
                 <Label htmlFor="sectionTitle">
-                  Title <span className="text-destructive">*</span>
+                  Название <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="sectionTitle"
-                  placeholder="e.g., Geography Questions"
+                  placeholder="Например, Вопросы по географии"
                   value={sectionTitle}
                   onChange={(e) => setSectionTitle(e.target.value)}
                 />
               </div>
 
-              {/* Section Description */}
+              {/* Section Описание */}
               <div className="space-y-2">
-                <Label htmlFor="sectionDescription">Description (optional)</Label>
+                <Label htmlFor="sectionDescription">Описание (необязательно)</Label>
                 <Textarea
                   id="sectionDescription"
-                  placeholder="Brief description of this section..."
+                  placeholder="Краткое описание этого раздела..."
                   value={sectionDescription}
                   onChange={(e) => setSectionDescription(e.target.value)}
                   rows={2}
@@ -241,7 +241,7 @@ export function SectionEditorDialog({
               <div className="space-y-2">
                 <Label>
                   <Image className="w-4 h-4 inline mr-2" />
-                  Image (optional)
+                  Изображение (необязательно)
                 </Label>
 
                 {imageUrl ? (
@@ -281,17 +281,17 @@ export function SectionEditorDialog({
                       {uploading ? (
                         <div className="flex flex-col items-center text-muted-foreground">
                           <Loader2 className="w-5 h-5 animate-spin mb-1" />
-                          <span className="text-xs">Uploading...</span>
+                          <span className="text-xs">Загрузка...</span>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center text-muted-foreground">
                           <Upload className="w-5 h-5 mb-1" />
-                          <span className="text-xs">Click to upload</span>
+                          <span className="text-xs">Нажмите, чтобы загрузить</span>
                         </div>
                       )}
                     </Button>
                     <Input
-                      placeholder="Or paste URL"
+                      placeholder="Или вставьте URL"
                       value={imageUrl}
                       onChange={(e) => setImageUrl(e.target.value)}
                       className="flex-1"
@@ -313,7 +313,7 @@ export function SectionEditorDialog({
                   >
                     <div className="flex items-center justify-between mb-4">
                       <p className="text-sm text-muted-foreground">
-                        Translate to {SupportedLanguages[lang].name}
+                        Перевод на {SupportedLanguages[lang].name}
                       </p>
                       <div className="flex gap-2">
                         <Button
@@ -325,12 +325,12 @@ export function SectionEditorDialog({
                           {autoTranslatingSection === lang ? (
                             <>
                               <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                              Translating...
+                              Перевод...
                             </>
                           ) : (
                             <>
                               <Sparkles className="w-3 h-3 mr-1" />
-                              Auto-Translate
+                              Автоперевод
                             </>
                           )}
                         </Button>
@@ -342,16 +342,16 @@ export function SectionEditorDialog({
                           {savingTranslation === lang ? (
                             <Loader2 className="w-3 h-3 animate-spin" />
                           ) : (
-                            "Save"
+                            "Сохранить"
                           )}
                         </Button>
                       </div>
                     </div>
 
-                    {/* Title Translation */}
+                    {/* Название Translation */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <Label>Title</Label>
+                        <Label>Название</Label>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -360,7 +360,7 @@ export function SectionEditorDialog({
                           }
                         >
                           <Copy className="w-3 h-3 mr-1" />
-                          Copy English
+                          Скопировать оригинал
                         </Button>
                       </div>
                       <div className="grid grid-cols-2 gap-2">
@@ -378,17 +378,17 @@ export function SectionEditorDialog({
                               e.target.value
                             )
                           }
-                          placeholder={`${SupportedLanguages[lang].name} translation...`}
+                          placeholder={`${SupportedLanguages[lang].name} перевод...`}
                           className="text-sm"
                         />
                       </div>
                     </div>
 
-                    {/* Description Translation */}
+                    {/* Описание Translation */}
                     {sectionDescription && (
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <Label>Description</Label>
+                          <Label>Описание</Label>
                           <Button
                             variant="ghost"
                             size="sm"
@@ -397,7 +397,7 @@ export function SectionEditorDialog({
                             }
                           >
                             <Copy className="w-3 h-3 mr-1" />
-                            Copy English
+                            Скопировать оригинал
                           </Button>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
@@ -416,7 +416,7 @@ export function SectionEditorDialog({
                                 e.target.value
                               )
                             }
-                            placeholder={`${SupportedLanguages[lang].name} translation...`}
+                            placeholder={`${SupportedLanguages[lang].name} перевод...`}
                             rows={2}
                             className="text-sm"
                           />
@@ -431,10 +431,10 @@ export function SectionEditorDialog({
         {/* Footer */}
         <div className="shrink-0 bg-background px-6 py-4 border-t flex justify-end gap-2">
           <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
+            Отмена
           </Button>
           <Button onClick={onSave} disabled={!canSave}>
-            {editingSection ? "Save Changes" : "Add Section"}
+            {editingSection ? "Сохранить изменения" : "Добавить раздел"}
           </Button>
         </div>
       </DialogContent>
