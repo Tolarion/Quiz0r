@@ -75,6 +75,115 @@ interface Quiz {
   translationLanguages?: LanguageCode[];
 }
 
+const t = {
+  loading: "Загрузка викторин...",
+  header: {
+    title: "Викторины",
+    description: "Создавайте и управляйте коллекцией викторин",
+    manageThemes: "Управление темами",
+    importQuiz: "Импорт викторины",
+    createQuizWithAi: "Создать викторину с AI",
+    createQuiz: "Создать викторину",
+  },
+  import: {
+    chooseZipError: "Выберите .zip-файл для импорта",
+    success: "Викторина импортирована",
+    failed: "Не удалось импортировать викторину",
+    unknownError: "Во время импорта викторины произошла ошибка.",
+    dialogTitle: "Импорт викторины",
+    dialogDescription:
+      "Загрузите экспорт викторины (.zip), чтобы добавить её в коллекцию. Изображения и переводы импортируются автоматически.",
+    helpTitle: "Нужен файл экспорта?",
+    helpDescription:
+      "Используйте кнопку «Экспорт» внутри викторины, чтобы скачать .zip с вопросами, разделами, изображениями и переводами.",
+    fileLabel: "Экспорт викторины (.zip)",
+    importing: "Импорт...",
+  },
+  ai: {
+    topicRequired: "Добавьте тему викторины.",
+    minQuestions: "Укажите минимум 3 вопроса.",
+    sectionCountRange:
+      "Количество разделов должно быть от 0 до количества вопросов.",
+    statusPreparing: "Подготавливаем запрос для AI...",
+    statusAsking: "Запрашиваем черновик викторины у OpenAI...",
+    statusSaving: "Сохраняем викторину в библиотеку...",
+    statusReady: "Викторина создана AI. Проверьте ответы внимательно.",
+    statusIdle: "Готово к созданию",
+    failedToCreate: "Не удалось создать викторину с помощью AI",
+    toastTitle: "AI-викторина готова",
+    toastDescription:
+      "Перед запуском проверьте подсказки, ответы и заметки для ведущего.",
+    dialogTitle: "Создать викторину с AI",
+    dialogDescription:
+      "Опишите, что нужно, и мы подготовим викторину на английском с подсказками, заметками для ведущего и подходящими изображениями. Перед запуском внимательно проверьте результат.",
+    unsplashWarning:
+      "Добавьте ключ доступа Unsplash в «Настройках», чтобы AI автоматически добавлял реальные изображения.",
+    topicLabel: "Тема",
+    topicPlaceholder: "Например: история освоения космоса",
+    questionCountLabel: "Количество вопросов",
+    questionCountHint:
+      "Мы автоматически сбалансируем ответы, подсказки и заметки для ведущего.",
+    sectionCountLabel: "Количество разделов",
+    sectionCountHint:
+      "Разделы работают как групповые подводки и могут включать изображения.",
+    difficultyLabel: "Сложность",
+    difficultyPlaceholder: "Выберите сложность",
+    difficultyEasy: "Лёгкая",
+    difficultyMedium: "Средняя",
+    difficultyHard: "Сложная",
+    notesLabel: "Дополнительные пожелания",
+    notesPlaceholder:
+      "Тон, целевая аудитория, обязательные факты или пожелания по изображениям (только на английском).",
+    notesHint:
+      "AI вернёт контент только на английском с подсказками, заметками для ведущего и изображениями, где это уместно.",
+    progressHint:
+      "Мы соберём вопросы, подсказки, заметки для ведущего и изображения. Перед использованием обязательно проверьте содержание.",
+    createdTitle: "Викторина создана AI",
+    createdDescription:
+      "Проверьте каждый ответ, подсказку и заметку для ведущего перед запуском.",
+    openQuiz: "Открыть викторину",
+    close: "Закрыть",
+    badgeCreated: "Создано AI",
+    cancel: "Отмена",
+    creating: "Создание...",
+    createButton: "Создать с AI",
+  },
+  list: {
+    empty: "Пока нет викторин",
+    createFirst: "Создать первую викторину",
+    aiBadge: "AI",
+    translated: "Есть переводы",
+    englishOnly: "Только английский",
+    moreLanguages: (count: number) => `+${count} ещё`,
+    edit: "Редактировать",
+    play: "Играть",
+    addQuestionsFirst: "Сначала добавьте вопросы",
+    startGame: "Начать игру",
+    questionCount: (count: number) => {
+      const mod10 = count % 10;
+      const mod100 = count % 100;
+
+      if (mod10 === 1 && mod100 !== 11) {
+        return `${count} вопрос`;
+      }
+
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+        return `${count} вопроса`;
+      }
+
+      return `${count} вопросов`;
+    },
+  },
+  deleteDialog: {
+    title: "Удалить эту викторину?",
+    descriptionBefore: "Это действие навсегда удалит",
+    descriptionAfter: "и все её вопросы. Отменить удаление нельзя.",
+    cancel: "Отмена",
+    deleting: "Удаление...",
+    confirm: "Удалить викторину",
+  },
+} as const;
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -170,7 +279,7 @@ export default function AdminDashboard() {
 
   async function handleImport(file: File) {
     if (!file) {
-      setImportError("Please choose a .zip file to import");
+      setImportError(t.import.chooseZipError);
       return;
     }
 
@@ -187,21 +296,21 @@ export default function AdminDashboard() {
       const data = await res.json();
 
       if (res.ok) {
-        toast.success(data.message || "Quiz imported");
+        toast.success(data.message || t.import.success);
         // Refresh the quiz list
         await fetchQuizzes();
         setImportDialogOpen(false);
         resetImportDialog();
       } else {
-        setImportError(data.error || "Failed to import quiz");
-        toast.error("Failed to import quiz", {
+        setImportError(data.error || t.import.failed);
+        toast.error(t.import.failed, {
           description: data.error,
         });
       }
     } catch (error) {
       console.error("Import error:", error);
-      setImportError("Something went wrong while importing the quiz.");
-      toast.error("Failed to import quiz");
+      setImportError(t.import.unknownError);
+      toast.error(t.import.failed);
     } finally {
       setImporting(false);
     }
@@ -212,28 +321,28 @@ export default function AdminDashboard() {
     setAiError(null);
 
     if (!aiTopic.trim()) {
-      setAiError("Please add a topic or theme for the quiz.");
+      setAiError(t.ai.topicRequired);
       return;
     }
 
     if (aiQuestionCount < 3) {
-      setAiError("Please request at least 3 questions.");
+      setAiError(t.ai.minQuestions);
       return;
     }
 
     if (aiSectionCount < 0 || aiSectionCount > aiQuestionCount) {
-      setAiError("Section count must be between 0 and the number of questions.");
+      setAiError(t.ai.sectionCountRange);
       return;
     }
 
     setAiCreating(true);
-    setAiStatus("Preparing your AI prompt...");
+    setAiStatus(t.ai.statusPreparing);
     setAiProgress(15);
     setAiCreatedQuizId(null);
     setAiCreatedTitle(null);
 
     try {
-      setAiStatus("Asking OpenAI to draft your quiz...");
+      setAiStatus(t.ai.statusAsking);
       setAiProgress(45);
 
       const res = await fetch("/api/quizzes/ai-generate", {
@@ -248,32 +357,27 @@ export default function AdminDashboard() {
         }),
       });
 
-      setAiStatus("Saving quiz to your library...");
+      setAiStatus(t.ai.statusSaving);
       setAiProgress(75);
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to create quiz with AI");
+        throw new Error(data.error || t.ai.failedToCreate);
       }
 
-      setAiStatus("Quiz created by AI. Review answers carefully.");
+      setAiStatus(t.ai.statusReady);
       setAiProgress(100);
       setAiCreatedQuizId(data.quizId);
       setAiCreatedTitle(data.quizTitle);
 
-      toast.success("AI quiz ready", {
-        description:
-          "Review hints, answers, and host notes before hosting.",
+      toast.success(t.ai.toastTitle, {
+        description: t.ai.toastDescription,
       });
       await fetchQuizzes();
     } catch (error) {
       console.error("AI generation error:", error);
-      setAiError(
-        error instanceof Error
-          ? error.message
-          : "Failed to generate quiz with AI"
-      );
+      setAiError(error instanceof Error ? error.message : t.ai.failedToCreate);
       setAiStatus(null);
       setAiProgress(0);
     } finally {
@@ -284,7 +388,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-muted-foreground">Loading quizzes...</div>
+        <div className="text-muted-foreground">{t.loading}</div>
       </div>
     );
   }
@@ -294,21 +398,19 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Quizzes</h1>
-          <p className="text-muted-foreground mt-1">
-            Create and manage your quiz collection
-          </p>
+          <h1 className="text-3xl font-bold">{t.header.title}</h1>
+          <p className="text-muted-foreground mt-1">{t.header.description}</p>
         </div>
         <div className="flex flex-wrap justify-end gap-2">
           <Link href="/admin/themes">
             <Button variant="outline">
               <Palette className="w-4 h-4 mr-2" />
-              Manage Themes
+              {t.header.manageThemes}
             </Button>
           </Link>
           <Button variant="outline" onClick={() => setImportDialogOpen(true)}>
             <Upload className="w-4 h-4 mr-2" />
-            Import Quiz
+            {t.header.importQuiz}
           </Button>
           {hasOpenaiKey && (
             <Button
@@ -320,13 +422,13 @@ export default function AdminDashboard() {
               className="gap-2"
             >
               <Sparkles className="w-4 h-4" />
-              Create Quiz using AI
+              {t.header.createQuizWithAi}
             </Button>
           )}
           <Link href="/admin/quiz/new">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              Create Quiz
+              {t.header.createQuiz}
             </Button>
           </Link>
         </div>
@@ -344,29 +446,25 @@ export default function AdminDashboard() {
             <DialogHeader className="space-y-2">
               <DialogTitle className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary" />
-                Create Quiz using AI
+                {t.ai.dialogTitle}
               </DialogTitle>
-            <DialogDescription className="text-sm">
-              Share what you need and we will draft the quiz in English with
-              hints, host notes, and suggested images where relevant. Review
-              the result carefully before hosting.
-              {!hasUnsplashKey && (
-                <div className="mt-3 flex items-start gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
-                  <AlertTriangle className="w-4 h-4 mt-0.5" />
-                  <span>
-                    Add an Unsplash access key in Settings to let AI include real images automatically.
-                  </span>
-                </div>
-              )}
-            </DialogDescription>
-          </DialogHeader>
+              <DialogDescription className="text-sm">
+                {t.ai.dialogDescription}
+                {!hasUnsplashKey && (
+                  <div className="mt-3 flex items-start gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                    <AlertTriangle className="w-4 h-4 mt-0.5" />
+                    <span>{t.ai.unsplashWarning}</span>
+                  </div>
+                )}
+              </DialogDescription>
+            </DialogHeader>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2 space-y-2">
-                <Label htmlFor="aiTopic">Topic or theme</Label>
+                <Label htmlFor="aiTopic">{t.ai.topicLabel}</Label>
                 <Input
                   id="aiTopic"
-                  placeholder="e.g., Space exploration history"
+                  placeholder={t.ai.topicPlaceholder}
                   value={aiTopic}
                   onChange={(e) => setAiTopic(e.target.value)}
                   disabled={aiCreating}
@@ -375,7 +473,9 @@ export default function AdminDashboard() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="aiQuestionCount">Number of questions</Label>
+                <Label htmlFor="aiQuestionCount">
+                  {t.ai.questionCountLabel}
+                </Label>
                 <Input
                   id="aiQuestionCount"
                   type="number"
@@ -386,12 +486,12 @@ export default function AdminDashboard() {
                   disabled={aiCreating}
                 />
                 <p className="text-xs text-muted-foreground">
-                  We will balance answers, hints, and host notes automatically.
+                  {t.ai.questionCountHint}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="aiSectionCount">Number of sections</Label>
+                <Label htmlFor="aiSectionCount">{t.ai.sectionCountLabel}</Label>
                 <Input
                   id="aiSectionCount"
                   type="number"
@@ -402,40 +502,42 @@ export default function AdminDashboard() {
                   disabled={aiCreating}
                 />
                 <p className="text-xs text-muted-foreground">
-                  Sections act as grouped intros; they&apos;ll include optional images.
+                  {t.ai.sectionCountHint}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="aiDifficulty">Difficulty</Label>
+                <Label htmlFor="aiDifficulty">{t.ai.difficultyLabel}</Label>
                 <Select
                   value={aiDifficulty}
                   onValueChange={setAiDifficulty}
                   disabled={aiCreating}
                 >
                   <SelectTrigger id="aiDifficulty">
-                    <SelectValue placeholder="Choose difficulty" />
+                    <SelectValue placeholder={t.ai.difficultyPlaceholder} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="easy">Easy</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="hard">Hard</SelectItem>
+                    <SelectItem value="easy">{t.ai.difficultyEasy}</SelectItem>
+                    <SelectItem value="medium">
+                      {t.ai.difficultyMedium}
+                    </SelectItem>
+                    <SelectItem value="hard">{t.ai.difficultyHard}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="sm:col-span-2 space-y-2">
-                <Label htmlFor="aiNotes">Any extra details?</Label>
+                <Label htmlFor="aiNotes">{t.ai.notesLabel}</Label>
                 <Textarea
                   id="aiNotes"
-                  placeholder="Tone, target audience, must-cover facts, or imagery guidance (English only)."
+                  placeholder={t.ai.notesPlaceholder}
                   value={aiNotes}
                   onChange={(e) => setAiNotes(e.target.value)}
                   rows={3}
                   disabled={aiCreating}
                 />
                 <p className="text-xs text-muted-foreground">
-                  AI will return English-only content with hints, host notes, and images when useful.
+                  {t.ai.notesHint}
                 </p>
               </div>
             </div>
@@ -446,15 +548,17 @@ export default function AdminDashboard() {
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-primary" />
-                      <span>{aiStatus || "Ready when you are"}</span>
+                      <span>{aiStatus || t.ai.statusIdle}</span>
                     </div>
                     {aiProgress > 0 && (
-                      <span className="text-muted-foreground">{aiProgress}%</span>
+                      <span className="text-muted-foreground">
+                        {aiProgress}%
+                      </span>
                     )}
                   </div>
                   <Progress value={aiProgress} className="h-2" />
                   <p className="text-xs text-muted-foreground">
-                    We&apos;ll assemble questions, hints, host notes, and images. Everything stays in English and should be reviewed before use.
+                    {t.ai.progressHint}
                   </p>
                 </div>
 
@@ -462,10 +566,10 @@ export default function AdminDashboard() {
                   <div className="rounded-md border border-primary/40 bg-primary/10 p-4 space-y-3">
                     <div className="flex items-center gap-2 font-medium text-foreground">
                       <Sparkles className="w-4 h-4 text-primary" />
-                      Quiz created by AI
+                      {t.ai.createdTitle}
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Review every answer, hint, and host note before hosting.
+                      {t.ai.createdDescription}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       <Button
@@ -473,10 +577,12 @@ export default function AdminDashboard() {
                         size="sm"
                         onClick={() => {
                           setAiDialogOpen(false);
-                          router.push(`/admin/quiz/${aiCreatedQuizId}/questions`);
+                          router.push(
+                            `/admin/quiz/${aiCreatedQuizId}/questions`,
+                          );
                         }}
                       >
-                        Open quiz
+                        {t.ai.openQuiz}
                       </Button>
                       <Button
                         type="button"
@@ -484,14 +590,14 @@ export default function AdminDashboard() {
                         variant="outline"
                         onClick={() => setAiDialogOpen(false)}
                       >
-                        Close
+                        {t.ai.close}
                       </Button>
                       <Badge
                         variant="outline"
                         className="flex items-center gap-1"
                       >
                         <Wand2 className="w-3 h-3" />
-                        AI created
+                        {t.ai.badgeCreated}
                       </Badge>
                     </div>
                   </div>
@@ -517,18 +623,18 @@ export default function AdminDashboard() {
                     }}
                     disabled={aiCreating}
                   >
-                    Cancel
+                    {t.ai.cancel}
                   </Button>
                   <Button type="submit" disabled={aiCreating}>
                     {aiCreating ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Creating...
+                        {t.ai.creating}
                       </>
                     ) : (
                       <>
                         <Wand2 className="w-4 h-4 mr-2" />
-                        Create with AI
+                        {t.ai.createButton}
                       </>
                     )}
                   </Button>
@@ -548,27 +654,23 @@ export default function AdminDashboard() {
       >
         <DialogContent className="sm:max-w-[520px]">
           <DialogHeader>
-            <DialogTitle>Import Quiz</DialogTitle>
-            <DialogDescription>
-              Upload a quiz export (.zip) to add it to your collection. Images
-              and translations are imported automatically.
-            </DialogDescription>
+            <DialogTitle>{t.import.dialogTitle}</DialogTitle>
+            <DialogDescription>{t.import.dialogDescription}</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-2">
             <div className="flex gap-3 rounded-lg border bg-muted/30 p-3 text-sm text-muted-foreground">
               <FileArchive className="h-5 w-5 text-primary flex-shrink-0" />
               <div>
-                <p className="font-medium text-foreground">Need the export?</p>
-                <p>
-                  Use the Export button inside a quiz to download a .zip that
-                  includes questions, sections, images, and translations.
+                <p className="font-medium text-foreground">
+                  {t.import.helpTitle}
                 </p>
+                <p>{t.import.helpDescription}</p>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="quizImportFile">Quiz export (.zip)</Label>
+              <Label htmlFor="quizImportFile">{t.import.fileLabel}</Label>
               <Input
                 id="quizImportFile"
                 type="file"
@@ -599,7 +701,7 @@ export default function AdminDashboard() {
               onClick={() => setImportDialogOpen(false)}
               disabled={importing}
             >
-              Cancel
+              {t.ai.cancel}
             </Button>
             <Button
               onClick={() => selectedFile && handleImport(selectedFile)}
@@ -608,12 +710,12 @@ export default function AdminDashboard() {
               {importing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Importing...
+                  {t.import.importing}
                 </>
               ) : (
                 <>
                   <Upload className="mr-2 h-4 w-4" />
-                  Import Quiz
+                  {t.header.importQuiz}
                 </>
               )}
             </Button>
@@ -625,11 +727,11 @@ export default function AdminDashboard() {
       {quizzes.length === 0 ? (
         <Card className="border-dashed">
           <CardContent className="flex flex-col items-center justify-center py-16">
-            <p className="text-muted-foreground mb-4">No quizzes yet</p>
+            <p className="text-muted-foreground mb-4">{t.list.empty}</p>
             <Link href="/admin/quiz/new">
               <Button>
                 <Plus className="w-4 h-4 mr-2" />
-                Create Your First Quiz
+                {t.list.createFirst}
               </Button>
             </Link>
           </CardContent>
@@ -647,13 +749,12 @@ export default function AdminDashboard() {
                       className="flex items-center gap-1 text-primary border-primary/40"
                     >
                       <Sparkles className="w-3 h-3" />
-                      AI
+                      {t.list.aiBadge}
                     </Badge>
                   )}
                 </CardTitle>
                 <CardDescription>
-                  {quiz.questionCount} question
-                  {quiz.questionCount !== 1 ? "s" : ""}
+                  {t.list.questionCount(quiz.questionCount)}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -663,17 +764,28 @@ export default function AdminDashboard() {
                   </p>
                 )}
                 <div className="flex flex-wrap items-center gap-2 mb-4">
-                  <Badge variant="secondary" className="flex items-center gap-1">
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1"
+                  >
                     <Globe className="w-3 h-3" />
-                    {quiz.translationLanguages?.length ? "Translated" : "English only"}
+                    {quiz.translationLanguages?.length
+                      ? t.list.translated
+                      : t.list.englishOnly}
                   </Badge>
                   {quiz.translationLanguages?.slice(0, 4).map((langCode) => {
                     const language = LanguageMap[langCode as LanguageCode];
                     if (!language) {
                       return (
-                        <Badge key={langCode} variant="outline" className="flex items-center gap-1">
+                        <Badge
+                          key={langCode}
+                          variant="outline"
+                          className="flex items-center gap-1"
+                        >
                           <span>{langCode.toUpperCase()}</span>
-                          <span className="hidden sm:inline text-xs">{langCode.toUpperCase()}</span>
+                          <span className="hidden sm:inline text-xs">
+                            {langCode.toUpperCase()}
+                          </span>
                         </Badge>
                       );
                     }
@@ -681,17 +793,26 @@ export default function AdminDashboard() {
                     const flag = language.flag;
                     const label = language.nativeName ?? language.name;
                     return (
-                      <Badge key={langCode} variant="outline" className="flex items-center gap-1">
+                      <Badge
+                        key={langCode}
+                        variant="outline"
+                        className="flex items-center gap-1"
+                      >
                         <span>{flag}</span>
-                        <span className="hidden sm:inline text-xs">{label}</span>
+                        <span className="hidden sm:inline text-xs">
+                          {label}
+                        </span>
                       </Badge>
                     );
                   })}
-                  {quiz.translationLanguages && quiz.translationLanguages.length > 4 && (
-                    <span className="text-xs text-muted-foreground">
-                      +{quiz.translationLanguages.length - 4} more
-                    </span>
-                  )}
+                  {quiz.translationLanguages &&
+                    quiz.translationLanguages.length > 4 && (
+                      <span className="text-xs text-muted-foreground">
+                        {t.list.moreLanguages(
+                          quiz.translationLanguages.length - 4,
+                        )}
+                      </span>
+                    )}
                 </div>
                 <div className="flex items-center gap-2">
                   <Link
@@ -700,7 +821,7 @@ export default function AdminDashboard() {
                   >
                     <Button variant="outline" size="sm" className="w-full">
                       <Pencil className="w-3 h-3 mr-2" />
-                      Edit
+                      {t.list.edit}
                     </Button>
                   </Link>
                   <Link href={`/host?quizId=${quiz.id}`}>
@@ -709,12 +830,12 @@ export default function AdminDashboard() {
                       disabled={quiz.questionCount === 0}
                       title={
                         quiz.questionCount === 0
-                          ? "Add questions first"
-                          : "Start game"
+                          ? t.list.addQuestionsFirst
+                          : t.list.startGame
                       }
                     >
                       <Play className="w-3 h-3 mr-2" />
-                      Play
+                      {t.list.play}
                     </Button>
                   </Link>
                   <Button
@@ -733,23 +854,31 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      <AlertDialog open={!!quizToDelete} onOpenChange={(open) => !open && setQuizToDelete(null)}>
+      <AlertDialog
+        open={!!quizToDelete}
+        onOpenChange={(open) => !open && setQuizToDelete(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete this quiz?</AlertDialogTitle>
+            <AlertDialogTitle>{t.deleteDialog.title}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete <strong>{quizToDelete?.title}</strong> and all of its questions.
-              This action cannot be undone.
+              {t.deleteDialog.descriptionBefore}{" "}
+              <strong>{quizToDelete?.title}</strong>{" "}
+              {t.deleteDialog.descriptionAfter}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={!!deletingQuizId}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={!!deletingQuizId}>
+              {t.deleteDialog.cancel}
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={deleteQuiz}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={!!deletingQuizId}
             >
-              {deletingQuizId ? "Deleting..." : "Delete Quiz"}
+              {deletingQuizId
+                ? t.deleteDialog.deleting
+                : t.deleteDialog.confirm}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
