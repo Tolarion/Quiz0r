@@ -319,6 +319,7 @@ export class GameManager {
         questionText: q.questionText,
         imageUrl: q.imageUrl,
         hostNotes: q.hostNotes,
+        hint: q.hint,
         questionType: q.questionType as "SINGLE_SELECT" | "MULTI_SELECT",
         timeLimit: q.timeLimit,
         points: q.points,
