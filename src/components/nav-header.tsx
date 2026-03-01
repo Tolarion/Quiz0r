@@ -11,43 +11,43 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   {
     href: "/admin",
-    label: "Quizzes",
+    label: "Викторины",
     icon: FileQuestion,
     color: "text-amber-500",
     bgColor: "bg-amber-500/10",
-    description: "Create and manage quizzes",
+    description: "Создание и управление викторинами",
   },
   {
     href: "/admin/games",
-    label: "Games",
+    label: "Игры",
     icon: Gamepad2,
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",
-    description: "View game sessions",
+    description: "Просмотр игровых сессий",
   },
   {
     href: "/host",
-    label: "Host",
+    label: "Ведущий",
     icon: Play,
     color: "text-red-500",
     bgColor: "bg-red-500/10",
-    description: "Start a game session",
+    description: "Запуск игровой сессии",
   },
   {
     href: "/admin/themes",
-    label: "Themes",
+    label: "Темы",
     icon: Palette,
     color: "text-yellow-500",
     bgColor: "bg-yellow-500/10",
-    description: "Manage and edit themes",
+    description: "Управление и редактирование тем",
   },
   {
     href: "/admin/settings",
-    label: "Settings",
+    label: "Настройки",
     icon: Settings,
     color: "text-orange-600",
     bgColor: "bg-orange-600/10",
-    description: "App configuration",
+    description: "Настройки приложения",
   },
 ];
 
@@ -110,7 +110,7 @@ export function NavHeader() {
             variant="ghost"
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Открыть меню"
             className="relative"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

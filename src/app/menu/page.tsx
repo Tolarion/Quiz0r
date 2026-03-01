@@ -7,32 +7,32 @@ import { FileQuestion, Gamepad2, Play, Settings, ArrowLeft } from "lucide-react"
 
 const menuItems = [
   {
-    title: "Quizzes",
-    description: "Create and manage your quizzes",
+    title: "Викторины",
+    description: "Создавайте и управляйте викторинами",
     icon: FileQuestion,
     href: "/admin",
     color: "text-amber-500",
     bgColor: "bg-amber-500/10",
   },
   {
-    title: "Games",
-    description: "View in-progress and previous games",
+    title: "Игры",
+    description: "Просмотр текущих и завершённых игр",
     icon: Gamepad2,
     href: "/admin/games",
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",
   },
   {
-    title: "Host Game",
-    description: "Start a new game session",
+    title: "Провести игру",
+    description: "Запустить новую игровую сессию",
     icon: Play,
     href: "/host",
     color: "text-red-500",
     bgColor: "bg-red-500/10",
   },
   {
-    title: "Settings",
-    description: "Configure app settings and API keys",
+    title: "Настройки",
+    description: "Настройка приложения и API-ключей",
     icon: Settings,
     href: "/admin/settings",
     color: "text-yellow-500",
@@ -48,13 +48,13 @@ export default function MenuPage() {
         <DarkModeToggle showLabel={false} />
       </div>
 
-      {/* Back button */}
+      {/* Кнопка "Назад" */}
       <Link
         href="/"
         className="absolute top-4 left-4 z-50 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back
+        Назад
       </Link>
 
       {/* Gradient background - warm colors */}
@@ -67,7 +67,7 @@ export default function MenuPage() {
             Quiz0r
           </h1>
           <p className="text-muted-foreground text-center mb-10 fade-in-up-delay-1">
-            What would you like to do?
+            Что вы хотите сделать?
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 fade-in-up-delay-2">
