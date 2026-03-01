@@ -127,16 +127,16 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Token saved successfully!" });
+        setMessage({ type: "success", text: "Токен успешно сохранён!" });
         setTokenInput("");
         setShowToken(false);
         fetchSettings();
       } else {
         const data = await res.json();
-        setMessage({ type: "error", text: data.error || "Failed to save token" });
+        setMessage({ type: "error", text: data.error || "Не удалось сохранить токен" });
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to save token" });
+      setMessage({ type: "error", text: "Не удалось сохранить токен" });
     } finally {
       setSaving(false);
     }
@@ -154,12 +154,12 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Token removed" });
+        setMessage({ type: "success", text: "Токен удалён" });
     fetchSettings();
   }
 
     } catch {
-      setMessage({ type: "error", text: "Failed to remove token" });
+      setMessage({ type: "error", text: "Не удалось удалить токен" });
     } finally {
       setSaving(false);
       setRemoveTokenDialogOpen(false);
@@ -178,13 +178,13 @@ export default function SettingsPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Tunnel started!" });
+        setMessage({ type: "success", text: "Туннель запущен!" });
         fetchSettings();
       } else {
-        setMessage({ type: "error", text: data.error || "Failed to start tunnel" });
+        setMessage({ type: "error", text: data.error || "Не удалось запустить туннель" });
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to start tunnel" });
+      setMessage({ type: "error", text: "Не удалось запустить туннель" });
     } finally {
       setTunnelLoading(false);
     }
@@ -200,13 +200,13 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Tunnel stopped" });
+        setMessage({ type: "success", text: "Туннель остановлен" });
         // Clear cached URL from localStorage
         localStorage.removeItem("quiz0r-base-url");
         fetchSettings();
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to stop tunnel" });
+      setMessage({ type: "error", text: "Не удалось остановить туннель" });
     } finally {
       setTunnelLoading(false);
     }
@@ -235,17 +235,17 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Short.io settings saved successfully!" });
+        setMessage({ type: "success", text: "Настройки Short.io успешно сохранены!" });
         setShortioApiKeyInput("");
         setShortioDomainInput("");
         setShowShortio(false);
         fetchSettings();
       } else {
         const data = await res.json();
-        setMessage({ type: "error", text: data.error || "Failed to save Short.io settings" });
+        setMessage({ type: "error", text: data.error || "Не удалось сохранить настройки Short.io" });
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to save Short.io settings" });
+      setMessage({ type: "error", text: "Не удалось сохранить настройки Short.io" });
     } finally {
       setSavingShortio(false);
     }
@@ -264,11 +264,11 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Short.io settings removed" });
+        setMessage({ type: "success", text: "Настройки Short.io удалены" });
         fetchSettings();
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to remove Short.io settings" });
+      setMessage({ type: "error", text: "Не удалось удалить настройки Short.io" });
     } finally {
       setSavingShortio(false);
     }
@@ -288,16 +288,16 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "OpenAI API key saved successfully!" });
+        setMessage({ type: "success", text: "Ключ API OpenAI успешно сохранён!" });
         setOpenaiApiKeyInput("");
         setShowOpenai(false);
         fetchSettings();
       } else {
         const data = await res.json();
-        setMessage({ type: "error", text: data.error || "Failed to save OpenAI API key" });
+        setMessage({ type: "error", text: data.error || "Не удалось сохранить ключ API OpenAI" });
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to save OpenAI API key" });
+      setMessage({ type: "error", text: "Не удалось сохранить ключ API OpenAI" });
     } finally {
       setSavingOpenai(false);
     }
@@ -316,11 +316,11 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "OpenAI API key removed" });
+        setMessage({ type: "success", text: "Ключ API OpenAI удалён" });
         fetchSettings();
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to remove OpenAI API key" });
+      setMessage({ type: "error", text: "Не удалось удалить ключ API OpenAI" });
     } finally {
       setSavingOpenai(false);
     }
@@ -340,16 +340,16 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Unsplash API key saved successfully!" });
+        setMessage({ type: "success", text: "Ключ API Unsplash успешно сохранён!" });
         setUnsplashApiKeyInput("");
         setShowUnsplash(false);
         fetchSettings();
       } else {
         const data = await res.json();
-        setMessage({ type: "error", text: data.error || "Failed to save Unsplash API key" });
+        setMessage({ type: "error", text: data.error || "Не удалось сохранить ключ API Unsplash" });
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to save Unsplash API key" });
+      setMessage({ type: "error", text: "Не удалось сохранить ключ API Unsplash" });
     } finally {
       setSavingUnsplash(false);
     }
@@ -368,11 +368,11 @@ export default function SettingsPage() {
       });
 
       if (res.ok) {
-        setMessage({ type: "success", text: "Unsplash API key removed" });
+        setMessage({ type: "success", text: "Ключ API Unsplash удалён" });
         fetchSettings();
       }
     } catch {
-      setMessage({ type: "error", text: "Failed to remove Unsplash API key" });
+      setMessage({ type: "error", text: "Не удалось удалить ключ API Unsplash" });
     } finally {
       setSavingUnsplash(false);
     }
@@ -396,11 +396,11 @@ export default function SettingsPage() {
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Quizzes
+            Назад к викторинам
           </Link>
           <h1 className="text-3xl font-bold flex items-center gap-2">
             <Settings className="w-8 h-8" />
-            Settings
+            Настройки
           </h1>
         </div>
       </div>
@@ -423,22 +423,22 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Download className="w-5 h-5" />
-            Backup & Restore
+            Резервное копирование и восстановление
           </CardTitle>
           <CardDescription>
-            Export your API keys and settings to an encrypted file for backup or
-            migration.
+            Экспортируйте ключи API и настройки в зашифрованный файл для резервного
+            копирования или переноса.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => setExportDialogOpen(true)}>
               <Download className="mr-2 h-4 w-4" />
-              Export Settings
+              Экспорт настроек
             </Button>
             <Button variant="outline" onClick={() => setImportDialogOpen(true)}>
               <Upload className="mr-2 h-4 w-4" />
-              Import Settings
+              Импорт настроек
             </Button>
           </div>
 
@@ -446,8 +446,8 @@ export default function SettingsPage() {
             <div className="flex gap-2 p-3 rounded-lg bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-sm">
               <AlertTriangle className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
               <p className="text-amber-900 dark:text-amber-100">
-                Your export file is encrypted with a password. Keep your password
-                safe - it cannot be recovered.
+                Файл экспорта зашифрован паролем. Сохраните пароль в надёжном
+                месте — восстановить его невозможно.
               </p>
             </div>
           )}
@@ -459,11 +459,12 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Globe className="w-5 h-5" />
-            External Tunnel
+            Внешний туннель
           </CardTitle>
           <CardDescription>
-            Enable external access so mobile players can join your quizzes by scanning QR codes.
-            Get a free ngrok auth token at{" "}
+            Включите внешний доступ, чтобы игроки с мобильных устройств могли
+            подключаться к викторинам по QR-коду. Получите бесплатный токен
+            авторизации ngrok на{" "}
             <a
               href="https://dashboard.ngrok.com/get-started/your-authtoken"
               target="_blank"
@@ -479,7 +480,7 @@ export default function SettingsPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Key className="w-4 h-4 text-muted-foreground" />
-              <Label>ngrok Auth Token</Label>
+              <Label>Токен авторизации ngrok</Label>
             </div>
 
               {settings?.hasToken ? (
@@ -493,7 +494,7 @@ export default function SettingsPage() {
                   onClick={() => setRemoveTokenDialogOpen(true)}
                   disabled={saving}
                 >
-                  Remove
+                  Удалить
                 </Button>
               </div>
             ) : showToken ? (
@@ -501,23 +502,23 @@ export default function SettingsPage() {
                 <div className="flex gap-2">
                   <Input
                     type="password"
-                    placeholder="Paste your ngrok auth token..."
+                    placeholder="Вставьте токен авторизации ngrok..."
                     value={tokenInput}
                     onChange={(e) => setTokenInput(e.target.value)}
                     className="flex-1"
                   />
                   <Button onClick={saveToken} disabled={!tokenInput || saving}>
-                    {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save"}
+                    {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Сохранить"}
                   </Button>
                   <Button variant="outline" onClick={() => setShowToken(false)}>
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
               </div>
             ) : (
               <Button variant="outline" onClick={() => setShowToken(true)}>
                 <Key className="w-4 h-4 mr-2" />
-                Add Token
+                Добавить токен
               </Button>
             )}
           </div>
@@ -527,11 +528,11 @@ export default function SettingsPage() {
             <div className="space-y-4 pt-4 border-t">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">Tunnel Status:</span>
+                  <span className="text-sm font-medium">Статус туннеля:</span>
                   {settings.tunnelRunning ? (
-                    <Badge className="bg-green-500">Running</Badge>
+                    <Badge className="bg-green-500">Запущен</Badge>
                   ) : (
-                    <Badge variant="secondary">Stopped</Badge>
+                    <Badge variant="secondary">Остановлен</Badge>
                   )}
                 </div>
 
@@ -546,7 +547,7 @@ export default function SettingsPage() {
                     ) : (
                       <Square className="w-4 h-4 mr-2" />
                     )}
-                    Stop Tunnel
+                    Остановить туннель
                   </Button>
                 ) : (
                   <Button onClick={startTunnel} disabled={tunnelLoading}>
@@ -555,14 +556,14 @@ export default function SettingsPage() {
                     ) : (
                       <Play className="w-4 h-4 mr-2" />
                     )}
-                    Start Tunnel
+                    Запустить туннель
                   </Button>
                 )}
               </div>
 
               {settings.tunnelUrl && (
                 <div className="space-y-2">
-                  <Label>Public URL</Label>
+                  <Label>Публичный URL</Label>
                   <div className="flex items-center gap-2">
                     <code className="flex-1 px-3 py-2 bg-muted rounded-md text-sm break-all">
                       {settings.tunnelUrl}
@@ -585,7 +586,7 @@ export default function SettingsPage() {
                     </a>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    This URL will be used for QR codes when you host a game.
+                    Этот URL будет использоваться в QR-кодах при запуске игры.
                   </p>
                 </div>
               )}
@@ -599,11 +600,11 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Link2 className="w-5 h-5" />
-            Short.io URL Shortener
+            Сокращение URL через Short.io
           </CardTitle>
           <CardDescription>
-            Generate short URLs for join links to make them easier to share.
-            Get a free API key and find your domain at{" "}
+            Создавайте короткие URL для ссылок подключения, чтобы ими было проще
+            делиться. Получите бесплатный ключ API и найдите свой домен на{" "}
             <a
               href="https://app.short.io/settings/integrations/api-key"
               target="_blank"
@@ -619,7 +620,7 @@ export default function SettingsPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Key className="w-4 h-4 text-muted-foreground" />
-              <Label>Short.io API Key</Label>
+              <Label>Ключ API Short.io</Label>
             </div>
 
             {settings?.hasShortioApiKey ? (
@@ -634,12 +635,12 @@ export default function SettingsPage() {
                     onClick={() => setShowRemoveDialog(true)}
                     disabled={savingShortio}
                   >
-                    Remove
+                    Удалить
                   </Button>
                 </div>
                 {settings.shortioDomain && (
                   <div className="space-y-2">
-                    <Label className="text-sm text-muted-foreground">Domain</Label>
+                    <Label className="text-sm text-muted-foreground">Домен</Label>
                     <code className="block px-3 py-2 bg-muted rounded-md text-sm">
                       {settings.shortioDomain}
                     </code>
@@ -651,21 +652,21 @@ export default function SettingsPage() {
                 <div className="space-y-2">
                   <Input
                     type="password"
-                    placeholder="Paste your Short.io API key..."
+                    placeholder="Вставьте ключ API Short.io..."
                     value={shortioApiKeyInput}
                     onChange={(e) => setShortioApiKeyInput(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Domain (required)</Label>
+                  <Label>Домен (обязательно)</Label>
                   <Input
                     type="text"
-                    placeholder="e.g., link.yourdomain.com"
+                    placeholder="например, link.yourdomain.com"
                     value={shortioDomainInput}
                     onChange={(e) => setShortioDomainInput(e.target.value)}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Your Short.io domain (find it in your Short.io dashboard)
+                    Ваш домен Short.io (можно найти в панели управления Short.io)
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -676,18 +677,18 @@ export default function SettingsPage() {
                     {savingShortio ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      "Save"
+                      "Сохранить"
                     )}
                   </Button>
                   <Button variant="outline" onClick={() => setShowShortio(false)}>
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
               </div>
             ) : (
               <Button variant="outline" onClick={() => setShowShortio(true)}>
                 <Key className="w-4 h-4 mr-2" />
-                Add Short.io Settings
+                Добавить настройки Short.io
               </Button>
             )}
           </div>
@@ -695,8 +696,8 @@ export default function SettingsPage() {
           {settings?.hasShortioApiKey && (
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground">
-                Short URLs will automatically be generated for join links when available.
-                If URL shortening fails, the full URL will be used as a fallback.
+                Короткие URL для ссылок подключения будут создаваться автоматически.
+                Если сокращение URL не сработает, будет использован полный URL.
               </p>
             </div>
           )}
@@ -711,8 +712,8 @@ export default function SettingsPage() {
             OpenAI
           </CardTitle>
           <CardDescription>
-            Power AI-written quizzes, theme generation, translations, and certificate messages with OpenAI GPT-4o.
-            Get an API key at{" "}
+            Используйте OpenAI GPT-4o для генерации викторин, тем, переводов и
+            текстов для сертификатов. Получите ключ API на{" "}
             <a
               href="https://platform.openai.com/api-keys"
               target="_blank"
@@ -728,7 +729,7 @@ export default function SettingsPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Key className="w-4 h-4 text-muted-foreground" />
-              <Label>OpenAI API Key</Label>
+              <Label>Ключ API OpenAI</Label>
             </div>
 
             {settings?.hasOpenaiApiKey ? (
@@ -743,7 +744,7 @@ export default function SettingsPage() {
                     onClick={() => setShowRemoveOpenaiDialog(true)}
                     disabled={savingOpenai}
                   >
-                    Remove
+                    Удалить
                   </Button>
                 </div>
               </div>
@@ -752,12 +753,12 @@ export default function SettingsPage() {
                 <div className="space-y-2">
                   <Input
                     type="password"
-                    placeholder="Paste your OpenAI API key..."
+                    placeholder="Вставьте ключ API OpenAI..."
                     value={openaiApiKeyInput}
                     onChange={(e) => setOpenaiApiKeyInput(e.target.value)}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Your API key is stored securely and never exposed to clients
+                    Ключ API хранится безопасно и никогда не передаётся клиентам
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -768,18 +769,18 @@ export default function SettingsPage() {
                     {savingOpenai ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      "Save"
+                      "Сохранить"
                     )}
                   </Button>
                   <Button variant="outline" onClick={() => setShowOpenai(false)}>
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
               </div>
             ) : (
               <Button variant="outline" onClick={() => setShowOpenai(true)}>
                 <Key className="w-4 h-4 mr-2" />
-                Add OpenAI API Key
+                Добавить ключ API OpenAI
               </Button>
             )}
           </div>
@@ -787,10 +788,12 @@ export default function SettingsPage() {
           {settings?.hasOpenaiApiKey && (
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground">
-                With OpenAI enabled, you can auto-write quizzes, generate themes from wizard answers,
-                translate quizzes to 10+ languages (Spanish, French, German, Hebrew, Japanese, Chinese,
-                Arabic, Portuguese, Russian, Italian), and craft AI congratulatory certificate messages.
-                Players can select their preferred language when joining.
+                С включённым OpenAI вы сможете автоматически создавать викторины,
+                генерировать темы по ответам мастера, переводить викторины на 10+
+                языков (испанский, французский, немецкий, иврит, японский,
+                китайский, арабский, португальский, русский, итальянский), а также
+                создавать AI-поздравления для сертификатов. Игроки смогут выбрать
+                предпочитаемый язык при подключении.
               </p>
             </div>
           )}
@@ -802,11 +805,11 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Image className="w-5 h-5" />
-            Unsplash Images
+            Изображения Unsplash
           </CardTitle>
           <CardDescription>
-            Provide an Unsplash Access Key to let AI-created quizzes include real images.
-            Get a key at{" "}
+            Добавьте ключ доступа Unsplash, чтобы AI-викторины включали реальные
+            изображения. Получите ключ на{" "}
             <a
               href="https://unsplash.com/developers"
               target="_blank"
@@ -821,7 +824,7 @@ export default function SettingsPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Key className="w-4 h-4 text-muted-foreground" />
-              <Label>Unsplash Access Key</Label>
+              <Label>Ключ доступа Unsplash</Label>
             </div>
 
             {settings?.hasUnsplashApiKey ? (
@@ -836,11 +839,11 @@ export default function SettingsPage() {
                     onClick={() => setShowRemoveUnsplashDialog(true)}
                     disabled={savingUnsplash}
                   >
-                    Remove
+                    Удалить
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  AI quiz creation will fetch topical images from Unsplash.
+                  При создании AI-викторин будут подбираться тематические изображения из Unsplash.
                 </p>
               </div>
             ) : showUnsplash ? (
@@ -848,12 +851,12 @@ export default function SettingsPage() {
                 <div className="space-y-2">
                   <Input
                     type="password"
-                    placeholder="Paste your Unsplash access key..."
+                    placeholder="Вставьте ключ доступа Unsplash..."
                     value={unsplashApiKeyInput}
                     onChange={(e) => setUnsplashApiKeyInput(e.target.value)}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Stored securely and only used server-side for image lookup.
+                    Ключ хранится безопасно и используется только на сервере для поиска изображений.
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -864,18 +867,18 @@ export default function SettingsPage() {
                     {savingUnsplash ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      "Save"
+                      "Сохранить"
                     )}
                   </Button>
                   <Button variant="outline" onClick={() => setShowUnsplash(false)}>
-                    Cancel
+                    Отмена
                   </Button>
                 </div>
               </div>
             ) : (
               <Button variant="outline" onClick={() => setShowUnsplash(true)}>
                 <Key className="w-4 h-4 mr-2" />
-                Add Unsplash Access Key
+                Добавить ключ доступа Unsplash
               </Button>
             )}
           </div>
@@ -883,7 +886,7 @@ export default function SettingsPage() {
           {settings?.hasUnsplashApiKey && (
             <div className="pt-4 border-t">
               <p className="text-sm text-muted-foreground">
-                AI quiz creation will attach images to sections and many questions automatically.
+                При создании AI-викторин изображения будут автоматически добавляться к разделам и многим вопросам.
               </p>
             </div>
           )}
@@ -893,19 +896,20 @@ export default function SettingsPage() {
       <AlertDialog open={removeTokenDialogOpen} onOpenChange={setRemoveTokenDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove ngrok token?</AlertDialogTitle>
+            <AlertDialogTitle>Удалить токен ngrok?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will stop your external tunnel until you add a new token. Are you sure you want to continue?
+              Внешний туннель будет остановлен, пока вы не добавите новый токен.
+              Продолжить?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={saving}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={saving}>Отмена</AlertDialogCancel>
             <AlertDialogAction
               onClick={removeToken}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={saving}
             >
-              {saving ? "Removing..." : "Remove Token"}
+              {saving ? "Удаление..." : "Удалить токен"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -915,10 +919,10 @@ export default function SettingsPage() {
       <Dialog open={showRemoveDialog} onOpenChange={setShowRemoveDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remove Short.io Settings?</DialogTitle>
+            <DialogTitle>Удалить настройки Short.io?</DialogTitle>
             <DialogDescription>
-              Are you sure you want to remove your Short.io API key and domain?
-              Your join links will no longer be shortened.
+              Вы уверены, что хотите удалить ключ API и домен Short.io?
+              Ссылки подключения больше не будут сокращаться.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -927,7 +931,7 @@ export default function SettingsPage() {
               onClick={() => setShowRemoveDialog(false)}
               disabled={savingShortio}
             >
-              Cancel
+              Отмена
             </Button>
             <Button
               variant="destructive"
@@ -937,7 +941,7 @@ export default function SettingsPage() {
               {savingShortio ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                "Remove Settings"
+                "Удалить настройки"
               )}
             </Button>
           </DialogFooter>
@@ -948,10 +952,10 @@ export default function SettingsPage() {
       <Dialog open={showRemoveOpenaiDialog} onOpenChange={setShowRemoveOpenaiDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remove OpenAI API Key?</DialogTitle>
+            <DialogTitle>Удалить ключ API OpenAI?</DialogTitle>
             <DialogDescription>
-              Are you sure you want to remove your OpenAI API key?
-              You will no longer be able to translate quizzes.
+              Вы уверены, что хотите удалить ключ API OpenAI?
+              После этого вы не сможете переводить викторины.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -960,7 +964,7 @@ export default function SettingsPage() {
               onClick={() => setShowRemoveOpenaiDialog(false)}
               disabled={savingOpenai}
             >
-              Cancel
+              Отмена
             </Button>
             <Button
               variant="destructive"
@@ -970,7 +974,7 @@ export default function SettingsPage() {
               {savingOpenai ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                "Remove API Key"
+                "Удалить ключ API"
               )}
             </Button>
           </DialogFooter>
@@ -981,9 +985,9 @@ export default function SettingsPage() {
       <Dialog open={showRemoveUnsplashDialog} onOpenChange={setShowRemoveUnsplashDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remove Unsplash Access Key?</DialogTitle>
+            <DialogTitle>Удалить ключ доступа Unsplash?</DialogTitle>
             <DialogDescription>
-              AI quiz creation will stop attaching Unsplash images if you remove this key.
+              Если удалить этот ключ, AI-викторины перестанут добавлять изображения Unsplash.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -992,7 +996,7 @@ export default function SettingsPage() {
               onClick={() => setShowRemoveUnsplashDialog(false)}
               disabled={savingUnsplash}
             >
-              Cancel
+              Отмена
             </Button>
             <Button
               variant="destructive"
@@ -1002,7 +1006,7 @@ export default function SettingsPage() {
               {savingUnsplash ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                "Remove API Key"
+                "Удалить ключ API"
               )}
             </Button>
           </DialogFooter>

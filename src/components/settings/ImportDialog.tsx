@@ -80,11 +80,11 @@ export function ImportDialog({
       setPreview(importPreview);
     } catch (error) {
       console.error("Decrypt error:", error);
-      toast.error("Decryption failed", {
+      toast.error("Ошибка расшифровки", {
         description:
           error instanceof Error
             ? error.message
-            : "Invalid password or corrupted file",
+            : "Неверный пароль или повреждённый файл",
       });
     } finally {
       setLoading(false);
@@ -126,11 +126,11 @@ export function ImportDialog({
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save settings to database");
+        throw new Error("Не удалось сохранить настройки в базу данных");
       }
 
-      toast.success("Settings imported successfully!", {
-        description: `${Object.keys(newSettings).length} settings have been updated`,
+      toast.success("Настройки успешно импортированы!", {
+        description: `${Object.keys(newSettings).length} настроек обновлено`,
       });
 
       // Reset and close
@@ -141,8 +141,8 @@ export function ImportDialog({
       onImportSuccess();
     } catch (error) {
       console.error("Import error:", error);
-      toast.error("Import failed", {
-        description: error instanceof Error ? error.message : "Unknown error",
+      toast.error("Ошибка импорта", {
+        description: error instanceof Error ? error.message : "Неизвестная ошибка",
       });
     } finally {
       setImporting(false);
@@ -153,10 +153,10 @@ export function ImportDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Import Settings</DialogTitle>
+          <DialogTitle>Импорт настроек</DialogTitle>
           <DialogDescription>
-            Select an encrypted export file and enter the password to restore
-            your settings.
+            Выберите зашифрованный файл экспорта и введите пароль, чтобы
+            восстановить настройки.
           </DialogDescription>
         </DialogHeader>
 
@@ -166,11 +166,11 @@ export function ImportDialog({
             <div className="flex gap-2 p-3 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800">
               <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-red-900 dark:text-red-100">
-                <p className="font-semibold mb-1">Decryption Not Available</p>
+                <p className="font-semibold mb-1">Расшифровка недоступна</p>
                 <p className="text-red-800 dark:text-red-200">
-                  The Web Crypto API is not available. Please ensure you are
-                  accessing this page over HTTPS or on localhost. Import is
-                  disabled until this is resolved.
+                  Web Crypto API недоступен. Убедитесь, что вы открыли эту
+                  страницу по HTTPS или на localhost. Импорт отключён, пока
+                  проблема не будет устранена.
                 </p>
               </div>
             </div>
@@ -179,7 +179,7 @@ export function ImportDialog({
           {/* File Upload */}
           {!preview && (
             <div className="space-y-2">
-              <Label htmlFor="file">Export File</Label>
+              <Label htmlFor="file">Файл экспорта</Label>
               <div className="flex items-center gap-2">
                 <Input
                   id="file"
@@ -201,14 +201,14 @@ export function ImportDialog({
           {/* Password */}
           {file && !preview && (
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Пароль</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter decryption password"
+                  placeholder="Введите пароль для расшифровки"
                   autoComplete="current-password"
                 />
                 <Button
@@ -233,9 +233,9 @@ export function ImportDialog({
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-semibold">Preview Import</h4>
+                  <h4 className="font-semibold">Предпросмотр импорта</h4>
                   <p className="text-sm text-muted-foreground">
-                    Exported: {new Date(preview.timestamp).toLocaleString()}
+                    Экспортировано: {new Date(preview.timestamp).toLocaleString()}
                   </p>
                 </div>
                 <Button
@@ -246,7 +246,7 @@ export function ImportDialog({
                     setPassword("");
                   }}
                 >
-                  Change File
+                  Выбрать другой файл
                 </Button>
               </div>
 
@@ -266,8 +266,8 @@ export function ImportDialog({
                         }
                       >
                         {setting.action === "overwrite"
-                          ? "⚠️ Will overwrite"
-                          : "✅ Will add"}
+                          ? "⚠️ Будет перезаписано"
+                          : "✅ Будет добавлено"}
                       </span>
                     </div>
                   ))}
@@ -279,10 +279,9 @@ export function ImportDialog({
                 <div className="flex gap-2 p-3 rounded-lg bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800">
                   <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-amber-900 dark:text-amber-100">
-                    <span className="font-semibold">Warning:</span> This will
-                    overwrite{" "}
+                    <span className="font-semibold">Внимание:</span> Будет перезаписано{" "}
                     {preview.settings.filter((s) => s.action === "overwrite").length}{" "}
-                    existing settings. This action cannot be undone.
+                    существующих настроек. Это действие нельзя отменить.
                   </p>
                 </div>
               )}
@@ -301,7 +300,7 @@ export function ImportDialog({
             }}
             disabled={loading || importing}
           >
-            Cancel
+            Отмена
           </Button>
 
           {!preview ? (
@@ -312,10 +311,10 @@ export function ImportDialog({
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Decrypting...
+                  Расшифровка...
                 </>
               ) : (
-                "Decrypt & Preview"
+                "Расшифровать и показать"
               )}
             </Button>
           ) : (
@@ -323,12 +322,12 @@ export function ImportDialog({
               {importing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Importing...
+                  Импорт...
                 </>
               ) : (
                 <>
                   <Upload className="mr-2 h-4 w-4" />
-                  Import Settings
+                  Импорт настроек
                 </>
               )}
             </Button>

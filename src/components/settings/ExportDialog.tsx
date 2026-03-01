@@ -60,8 +60,8 @@ export function ExportDialog({
       const exportFile = await exportSettingsToFile(settings, password);
       downloadFile(exportFile, generateExportFilename());
 
-      toast.success("Settings exported successfully!", {
-        description: `${exportFile.metadata.settingsCount} settings encrypted and downloaded`,
+      toast.success("Настройки успешно экспортированы!", {
+        description: `${exportFile.metadata.settingsCount} настроек зашифровано и загружено`,
       });
 
       onExportSuccess?.();
@@ -72,8 +72,8 @@ export function ExportDialog({
       onOpenChange(false);
     } catch (error) {
       console.error("Export error:", error);
-      toast.error("Export failed", {
-        description: error instanceof Error ? error.message : "Unknown error",
+      toast.error("Ошибка экспорта", {
+        description: error instanceof Error ? error.message : "Неизвестная ошибка",
       });
     } finally {
       setExporting(false);
@@ -84,10 +84,10 @@ export function ExportDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Export Settings</DialogTitle>
+          <DialogTitle>Экспорт настроек</DialogTitle>
           <DialogDescription>
-            Your settings will be encrypted with a password. You&apos;ll need
-            this password to import the settings later.
+            Ваши настройки будут зашифрованы паролем. Этот пароль понадобится
+            для последующего импорта настроек.
           </DialogDescription>
         </DialogHeader>
 
@@ -97,11 +97,11 @@ export function ExportDialog({
             <div className="flex gap-2 p-3 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800">
               <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-red-900 dark:text-red-100">
-                <p className="font-semibold mb-1">Encryption Not Available</p>
+                <p className="font-semibold mb-1">Шифрование недоступно</p>
                 <p className="text-red-800 dark:text-red-200">
-                  The Web Crypto API is not available. Please ensure you are
-                  accessing this page over HTTPS or on localhost. Export is
-                  disabled until this is resolved.
+                  Web Crypto API недоступен. Убедитесь, что вы открыли эту
+                  страницу по HTTPS или на localhost. Экспорт отключён, пока
+                  проблема не будет устранена.
                 </p>
               </div>
             </div>
@@ -109,14 +109,14 @@ export function ExportDialog({
 
           {/* Password */}
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Пароль</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter encryption password"
+                placeholder="Введите пароль для шифрования"
                 autoComplete="new-password"
               />
               <Button
@@ -139,18 +139,18 @@ export function ExportDialog({
           {/* Confirm Password */}
           {password && strength.isValid && (
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Подтвердите пароль</Label>
               <Input
                 id="confirmPassword"
                 type={showPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter password"
+                placeholder="Повторно введите пароль"
                 autoComplete="new-password"
               />
               {confirmPassword && !passwordsMatch && (
                 <p className="text-sm text-destructive">
-                  Passwords do not match
+                  Пароли не совпадают
                 </p>
               )}
             </div>
@@ -161,11 +161,11 @@ export function ExportDialog({
             <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
             <div className="text-sm text-amber-900 dark:text-amber-100">
               <p className="font-semibold mb-1">
-                Important: Store your password securely
+                Важно: храните пароль в безопасном месте
               </p>
               <p className="text-amber-800 dark:text-amber-200">
-                If you lose your password, you cannot decrypt the export file.
-                There is no password recovery.
+                Если вы потеряете пароль, расшифровать файл экспорта будет
+                невозможно. Восстановление пароля не предусмотрено.
               </p>
             </div>
           </div>
@@ -177,18 +177,18 @@ export function ExportDialog({
             onClick={() => onOpenChange(false)}
             disabled={exporting}
           >
-            Cancel
+            Отмена
           </Button>
           <Button onClick={handleExport} disabled={!canExport || exporting}>
             {exporting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Exporting...
+                Экспорт...
               </>
             ) : (
               <>
                 <Download className="mr-2 h-4 w-4" />
-                Export Settings
+                Экспорт настроек
               </>
             )}
           </Button>

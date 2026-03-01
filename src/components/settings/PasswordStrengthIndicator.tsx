@@ -17,11 +17,11 @@ export function PasswordStrengthIndicator({
   };
 
   const labels = {
-    0: "Too short",
-    1: "Weak",
-    2: "Fair",
-    3: "Good",
-    4: "Strong",
+    0: "Слишком короткий",
+    1: "Слабый",
+    2: "Средний",
+    3: "Хороший",
+    4: "Надёжный",
   };
 
   return (
