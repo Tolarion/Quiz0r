@@ -674,8 +674,109 @@ export class GameManager {
     const question = game.questions[game.currentQuestionIndex];
     const correctIds = game.correctAnswerIds.get(question.id) || [];
 
-    // Get answer statistics
+    // Auto-resolve Copy power-up for players who selected it but never submitted manually.
+    // This allows "copy only" flow to count as an answer when the chosen player has answered.
     const answeredPlayers = game.playerAnswers.get(question.id);
+    if (answeredPlayers) {
+      const questionPowerUps = await prisma.powerUpUsage.findMany({
+        where: { questionId: question.id },
+      });
+
+      const powerUpsByPlayer = new Map<string, typeof questionPowerUps>();
+      for (const powerUp of questionPowerUps) {
+        const list = powerUpsByPlayer.get(powerUp.playerId) || [];
+        list.push(powerUp);
+        powerUpsByPlayer.set(powerUp.playerId, list);
+      }
+
+      const copyPowerUps = questionPowerUps.filter(
+        (powerUp) => powerUp.powerUpType === "copy" && !!powerUp.copiedPlayerId
+      );
+
+      for (const copyPowerUp of copyPowerUps) {
+        const playerId = copyPowerUp.playerId;
+        if (answeredPlayers.has(playerId) || !copyPowerUp.copiedPlayerId) continue;
+
+        const copiedAnswer = await prisma.playerAnswer.findUnique({
+          where: {
+            playerId_questionId: {
+              playerId: copyPowerUp.copiedPlayerId,
+              questionId: question.id,
+            },
+          },
+        });
+
+        if (!copiedAnswer) continue;
+
+        const answerIds = JSON.parse(copiedAnswer.selectedAnswerIds) as string[];
+        const timeTaken = question.timeLimit * 1000;
+        let isCorrect = false;
+        let points = 0;
+
+        if (question.questionType === "SINGLE_SELECT") {
+          isCorrect = answerIds.length === 1 && correctIds.includes(answerIds[0]);
+          points = calculateSingleSelectScore(
+            question.points,
+            question.timeLimit * 1000,
+            timeTaken,
+            isCorrect
+          );
+        } else {
+          isCorrect = isFullyCorrect(answerIds, correctIds);
+          points = calculateMultiSelectScore(
+            question.points,
+            question.timeLimit * 1000,
+            timeTaken,
+            answerIds,
+            correctIds
+          );
+        }
+
+        if (question.easterEggDisablesScoring) {
+          const easterEggClick = await prisma.easterEggClick.findUnique({
+            where: {
+              playerId_questionId: {
+                playerId,
+                questionId: question.id,
+              },
+            },
+          });
+
+          if (easterEggClick) points = 0;
+        }
+
+        const usedPowerUps = powerUpsByPlayer.get(playerId) || [];
+        const usedDouble = usedPowerUps.some((p) => p.powerUpType === "double");
+        if (usedDouble) {
+          points = points * 2;
+        }
+
+        try {
+          await prisma.playerAnswer.create({
+            data: {
+              playerId,
+              questionId: question.id,
+              selectedAnswerIds: JSON.stringify(answerIds),
+              isCorrect,
+              timeToAnswer: timeTaken,
+              pointsEarned: points,
+            },
+          });
+
+          await prisma.player.update({
+            where: { id: playerId },
+            data: { totalScore: { increment: points } },
+          });
+
+          answeredPlayers.add(playerId);
+          console.log(`[PowerUp] Auto-copied answer applied for player ${playerId}`);
+        } catch (error) {
+          console.error("Error saving auto-copied answer:", error);
+        }
+      }
+    }
+
+    // Get answer statistics
     const answers = await prisma.playerAnswer.findMany({
       where: { questionId: question.id },
     });
