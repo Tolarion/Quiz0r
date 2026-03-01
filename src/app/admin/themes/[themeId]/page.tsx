@@ -96,7 +96,7 @@ export default function ThemeBuilderPage({ params }: Props) {
       try {
         const res = await fetch(`/api/themes/${themeId}`);
         if (!res.ok) {
-          setError("Theme not found");
+          setError("Тема не найдена");
           return;
         }
 
@@ -109,7 +109,7 @@ export default function ThemeBuilderPage({ params }: Props) {
         setSelectedPresetId(findBuiltinThemeId(t.theme));
       } catch (err) {
         console.error("Failed to load theme:", err);
-        setError("Failed to load theme");
+        setError("Не удалось загрузить тему");
       } finally {
         setLoading(false);
       }
@@ -191,7 +191,7 @@ export default function ThemeBuilderPage({ params }: Props) {
 
       const data = await res.json();
       if (!res.ok) {
-        setGenerationError(data.error || "Failed to generate theme");
+        setGenerationError(data.error || "Не удалось сгенерировать тему");
         return;
       }
 
@@ -204,7 +204,7 @@ export default function ThemeBuilderPage({ params }: Props) {
       setActiveTab("json");
     } catch (err) {
       console.error("Failed to generate theme:", err);
-      setGenerationError("Failed to generate theme");
+      setGenerationError("Не удалось сгенерировать тему");
     } finally {
       setGenerating(false);
     }
@@ -234,11 +234,11 @@ export default function ThemeBuilderPage({ params }: Props) {
       if (res.ok) {
         router.push("/admin/themes");
       } else {
-        setError(data.error || "Failed to save theme");
+        setError(data.error || "Не удалось сохранить тему");
       }
     } catch (err) {
       console.error("Failed to save theme:", err);
-      setError("Failed to save theme");
+      setError("Не удалось сохранить тему");
     } finally {
       setSaving(false);
     }
@@ -283,10 +283,10 @@ export default function ThemeBuilderPage({ params }: Props) {
             <div>
               <h1 className="text-xl font-bold flex items-center gap-2">
                 <Palette className="w-5 h-5" />
-                {isNew ? "Create Theme" : "Edit Theme"}
+                {isNew ? "Создать тему" : "Редактирование темы"}
               </h1>
               <p className="text-sm text-muted-foreground">
-                {isNew ? "Use the AI wizard or JSON editor to craft a new theme" : "Update or refine this theme for future quizzes"}
+                {isNew ? "Используйте мастер ИИ, встроенные темы или JSON-редактор, чтобы собрать тему" : "Используйте мастер ИИ, встроенные темы или JSON-редактор, чтобы обновить тему"}
               </p>
             </div>
           </div>
@@ -299,7 +299,7 @@ export default function ThemeBuilderPage({ params }: Props) {
                   disabled={deleting}
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Delete
+                  Удалить
                 </Button>
               )}
               <Button onClick={saveTheme} disabled={saveDisabled}>
@@ -308,12 +308,12 @@ export default function ThemeBuilderPage({ params }: Props) {
                 ) : (
                   <Check className="w-4 h-4 mr-2" />
                 )}
-                Save Theme
+                Сохранить тему
               </Button>
             </div>
             {selectedPresetId && (
               <p className="text-xs text-muted-foreground">
-                Built-in themes are fixed; customize first or use the AI Wizard.
+                Встроенные темы нельзя сохранить как есть — сначала измените тему или сгенерируйте свою через мастер ИИ.
               </p>
             )}
           </div>
@@ -325,16 +325,16 @@ export default function ThemeBuilderPage({ params }: Props) {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Details</CardTitle>
-                <CardDescription>Optional description for your library</CardDescription>
+                <CardTitle>Параметры темы</CardTitle>
+                <CardDescription>Описание для библиотеки тем</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Label htmlFor="theme-description">Description</Label>
+                <Label htmlFor="theme-description">Описание</Label>
                 <Input
                   id="theme-description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Short note about this theme"
+                  placeholder="Краткое описание темы"
                 />
               </CardContent>
             </Card>
@@ -346,7 +346,7 @@ export default function ThemeBuilderPage({ params }: Props) {
                 size="sm"
               >
                 <Sparkles className="w-4 h-4 mr-2" />
-                Presets
+                Встроенные темы
               </Button>
               <Button
                 variant={activeTab === "wizard" ? "default" : "outline"}
@@ -354,22 +354,22 @@ export default function ThemeBuilderPage({ params }: Props) {
                 size="sm"
               >
                 <Wand2 className="w-4 h-4 mr-2" />
-                AI Wizard
+                Мастер ИИ
               </Button>
               <Button
                 variant={activeTab === "json" ? "default" : "outline"}
                 onClick={() => setActiveTab("json")}
                 size="sm"
               >
-                JSON
+                JSON темы
               </Button>
             </div>
 
             {activeTab === "presets" && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Theme Presets</CardTitle>
-                  <CardDescription>Select a preset as a starting point</CardDescription>
+                  <CardTitle>Встроенные темы</CardTitle>
+                  <CardDescription>Выберите встроенную тему как отправную точку</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4">
@@ -384,9 +384,9 @@ export default function ThemeBuilderPage({ params }: Props) {
                       className="text-left p-3 rounded-lg border hover:border-primary transition-colors"
                     >
                       <ThemePreviewMini theme={DEFAULT_THEME} />
-                      <p className="font-medium mt-2">Default</p>
+                      <p className="font-medium mt-2">Тема по умолчанию</p>
                       <p className="text-xs text-muted-foreground">
-                        App base styling
+                        Базовое оформление приложения
                       </p>
                     </button>
 
@@ -411,17 +411,17 @@ export default function ThemeBuilderPage({ params }: Props) {
             {activeTab === "wizard" && (
               <Card>
                 <CardHeader>
-                  <CardTitle>AI Theme Wizard</CardTitle>
+                  <CardTitle>Мастер ИИ</CardTitle>
                   <CardDescription>
-                    Answer a few questions and generate a theme automatically. If you don&apos;t have an OpenAI key, you can still copy the prompt.
+                    Ответьте на несколько вопросов, чтобы сгенерировать тему автоматически. Если ключа OpenAI нет, можно скопировать промпт и сгенерировать тему вручную.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="topic">What is your quiz about?</Label>
+                    <Label htmlFor="topic">О чем ваш квиз?</Label>
                     <Input
                       id="topic"
-                      placeholder="e.g., Christmas Trivia, Science Quiz, Movie Night"
+                      placeholder="Например: новогодний квиз, научная викторина, киновечер"
                       value={wizardAnswers.topic}
                       onChange={(e) =>
                         setWizardAnswers({ ...wizardAnswers, topic: e.target.value })
@@ -430,10 +430,10 @@ export default function ThemeBuilderPage({ params }: Props) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="mood">What mood do you want?</Label>
+                    <Label htmlFor="mood">Какое настроение у темы?</Label>
                     <Input
                       id="mood"
-                      placeholder="e.g., fun and playful, professional, spooky, festive"
+                      placeholder="Например: яркое и веселое, строгое, мистическое, праздничное"
                       value={wizardAnswers.mood}
                       onChange={(e) =>
                         setWizardAnswers({ ...wizardAnswers, mood: e.target.value })
@@ -442,10 +442,10 @@ export default function ThemeBuilderPage({ params }: Props) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="colors">Preferred colors (optional)</Label>
+                    <Label htmlFor="colors">Предпочтительные цвета (необязательно)</Label>
                     <Input
                       id="colors"
-                      placeholder="e.g., blues and greens, warm sunset colors, neon"
+                      placeholder="Например: сине-зеленая палитра, теплый закат, неон"
                       value={wizardAnswers.colors}
                       onChange={(e) =>
                         setWizardAnswers({ ...wizardAnswers, colors: e.target.value })
@@ -454,10 +454,10 @@ export default function ThemeBuilderPage({ params }: Props) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="background">Background animation</Label>
+                    <Label htmlFor="background">Анимация фона</Label>
                     <Input
                       id="background"
-                      placeholder="e.g., falling snow, twinkling stars, bubbles, none"
+                      placeholder="Например: падающий снег, мерцающие звезды, пузырьки, без анимации"
                       value={wizardAnswers.backgroundAnimation}
                       onChange={(e) =>
                         setWizardAnswers({
@@ -469,10 +469,10 @@ export default function ThemeBuilderPage({ params }: Props) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="celebration">Celebration effect</Label>
+                    <Label htmlFor="celebration">Эффект победы</Label>
                     <Input
                       id="celebration"
-                      placeholder="e.g., confetti, sparkles, fireworks, simple glow"
+                      placeholder="Например: конфетти, искры, фейерверк, мягкое свечение"
                       value={wizardAnswers.celebration}
                       onChange={(e) =>
                         setWizardAnswers({
@@ -493,17 +493,17 @@ export default function ThemeBuilderPage({ params }: Props) {
                         {generating ? (
                           <>
                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                            Generating Theme...
+                            Генерируем тему...
                           </>
                         ) : (
                           <>
                             <Sparkles className="w-4 h-4 mr-2" />
-                            Generate Theme with AI
+                            Сгенерировать тему через ИИ
                           </>
                         )}
                       </Button>
                       <p className="text-xs text-muted-foreground text-center">
-                        Uses your saved OpenAI API key from Settings.
+                        Используется OpenAI API ключ из настроек.
                       </p>
                     </>
                   ) : (
@@ -516,26 +516,26 @@ export default function ThemeBuilderPage({ params }: Props) {
                         {copied ? (
                           <>
                             <Check className="w-4 h-4 mr-2" />
-                            Copied!
+                            Скопировано!
                           </>
                         ) : (
                           <>
                             <Copy className="w-4 h-4 mr-2" />
-                            Copy Prompt for AI
+                            Скопировать промпт для ИИ
                           </>
                         )}
                       </Button>
 
                       <div className="text-sm text-muted-foreground space-y-2 pt-2 border-t">
-                        <p className="font-medium">Next steps:</p>
+                        <p className="font-medium">Что делать дальше:</p>
                         <ol className="list-decimal list-inside space-y-1">
-                          <li>Click &quot;Copy Prompt for AI&quot; above</li>
-                          <li>Paste into ChatGPT, Claude, or your preferred AI</li>
-                          <li>Copy the JSON response from the AI</li>
-                          <li>Go to the JSON tab and paste it there</li>
+                          <li>Нажмите «Скопировать промпт для ИИ»</li>
+                          <li>Вставьте его в ChatGPT, Claude или другой ИИ</li>
+                          <li>Скопируйте JSON-ответ</li>
+                          <li>Перейдите на вкладку JSON и вставьте его туда</li>
                         </ol>
                         <p className="text-xs">
-                          Tip: Add an OpenAI API key in Settings to generate themes automatically.
+                          Подсказка: добавьте OpenAI API ключ в настройках, чтобы генерировать темы автоматически.
                         </p>
                       </div>
                     </>
@@ -551,20 +551,20 @@ export default function ThemeBuilderPage({ params }: Props) {
             {activeTab === "json" && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Theme JSON</CardTitle>
+                  <CardTitle>JSON темы</CardTitle>
                   <CardDescription>
-                    Paste your theme JSON here (from AI or manual editing)
+                    Вставьте JSON темы (из ИИ или после ручного редактирования)
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Textarea
                     value={themeJson}
                     onChange={(e) => handleJsonChange(e.target.value)}
-                    placeholder="Paste your theme JSON here..."
+                    placeholder="Вставьте JSON темы..."
                     className="font-mono text-sm min-h-[400px]"
                   />
                   {error && (
-                    <p className="text-sm text-destructive">{error}</p>
+                    <p className="text-sm text-destructive">Ошибка валидации JSON: {error}</p>
                   )}
                 </CardContent>
               </Card>
@@ -572,12 +572,12 @@ export default function ThemeBuilderPage({ params }: Props) {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Preview</h2>
+            <h2 className="text-lg font-semibold">Предпросмотр темы</h2>
             <ThemePreview theme={previewTheme} />
             <p className="text-sm text-muted-foreground">
               {previewTheme
-                ? `Previewing: ${previewTheme.name}`
-                : "Using default theme"}
+                ? `Предпросмотр: ${previewTheme.name}`
+                : "Используется тема по умолчанию"}
             </p>
           </div>
         </div>
@@ -586,14 +586,14 @@ export default function ThemeBuilderPage({ params }: Props) {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete this theme?</AlertDialogTitle>
+            <AlertDialogTitle>Удалить тему?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove this theme from your library. Any quiz using it will fall back to the
-              default theme.
+              Тема будет удалена из библиотеки без возможности восстановления. Во всех квизах, где она использовалась,
+              автоматически применится тема по умолчанию.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deleting}>Отмена</AlertDialogCancel>
             <AlertDialogAction
               onClick={deleteTheme}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -602,10 +602,10 @@ export default function ThemeBuilderPage({ params }: Props) {
               {deleting ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Deleting...
+                  Удаляем...
                 </>
               ) : (
-                "Delete Theme"
+                "Удалить тему"
               )}
             </AlertDialogAction>
           </AlertDialogFooter>
