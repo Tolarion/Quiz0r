@@ -771,8 +771,8 @@ export default function PlayerGamePage({
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2">
             <CardContent className="pt-6 text-center">
               <X className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <p className="text-lg font-medium">Game Cancelled</p>
-              <p className="text-muted-foreground mt-2">The host has cancelled this game.</p>
+              <p className="text-lg font-medium">Игра отменена</p>
+              <p className="text-muted-foreground mt-2">Ведущий отменил эту игру.</p>
               <Button onClick={() => router.push("/play")} className="mt-4">
                 Присоединиться к другой игре
               </Button>
@@ -800,7 +800,7 @@ export default function PlayerGamePage({
               <X className="w-12 h-12 mx-auto text-destructive mb-4" />
               <p className="text-lg font-medium text-destructive">{error}</p>
               <Button onClick={() => router.push("/play")} className="mt-4">
-                Try Another Code
+                Попробовать другой код
               </Button>
             </CardContent>
           </Card>
@@ -824,7 +824,7 @@ export default function PlayerGamePage({
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2">
             <CardContent className="pt-6 text-center">
               <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
-              <p className="text-muted-foreground">Checking game...</p>
+              <p className="text-muted-foreground">Проверяем игру...</p>
             </CardContent>
           </Card>
         </div>
@@ -847,12 +847,12 @@ export default function PlayerGamePage({
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2">
             <CardContent className="pt-6 text-center">
               <X className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <p className="text-lg font-medium">Game Not Found</p>
+              <p className="text-lg font-medium">Игра не найдена</p>
               <p className="text-muted-foreground mt-2">
-                This game code doesn&apos;t exist. Please check the code and try again.
+                Такой код игры не существует. Проверьте код и попробуйте снова.
               </p>
               <Button onClick={() => router.push("/play")} className="mt-4">
-                Enter Different Code
+                Ввести другой код
               </Button>
             </CardContent>
           </Card>
@@ -876,9 +876,9 @@ export default function PlayerGamePage({
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2">
             <CardContent className="pt-6 text-center">
               <X className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <p className="text-lg font-medium">Game Has Ended</p>
+              <p className="text-lg font-medium">Игра завершена</p>
               <p className="text-muted-foreground mt-2">
-                This game is no longer accepting new players.
+                Эта игра больше не принимает новых игроков.
               </p>
               <Button onClick={() => router.push("/play")} className="mt-4">
                 Присоединиться к другой игре
@@ -904,16 +904,16 @@ export default function PlayerGamePage({
           <BackgroundEffects theme={joinTheme} />
           <Card className="w-full max-w-sm relative z-10 shadow-2xl border-2">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Join Game</CardTitle>
+              <CardTitle className="text-2xl">Присоединение к игре</CardTitle>
               <p className="text-muted-foreground font-mono text-lg">{gameCode}</p>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleJoin} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Your Name</label>
+                  <label className="text-sm font-medium">Ваше имя</label>
                   <Input
                     type="text"
-                    placeholder="Enter your name..."
+                    placeholder="Введите имя..."
                     value={playerName}
                     onChange={(e) => setPlayerName(e.target.value.slice(0, 20))}
                     className="text-center text-lg h-12"
@@ -923,7 +923,7 @@ export default function PlayerGamePage({
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Choose Your Avatar</label>
+                  <label className="text-sm font-medium">Выберите аватар</label>
 
                   {/* Avatar Preview */}
                   {(avatarImage || selectedEmoji) && (
@@ -932,7 +932,7 @@ export default function PlayerGamePage({
                         {avatarImage ? (
                           <img
                             src={avatarImage}
-                            alt="Avatar"
+                            alt="Аватар"
                             className="w-16 h-16 rounded-full object-cover ring-2 ring-primary"
                           />
                         ) : (
@@ -971,7 +971,7 @@ export default function PlayerGamePage({
                         <Upload className="w-4 h-4" />
                       )}
                       <span className="text-sm">
-                        {uploadingImage ? "Uploading..." : avatarImage ? "Change Image" : "Upload Image"}
+                        {uploadingImage ? "Загрузка..." : avatarImage ? "Сменить изображение" : "Загрузить изображение"}
                       </span>
                       <input
                         type="file"
@@ -983,7 +983,7 @@ export default function PlayerGamePage({
                     </label>
                   </div>
 
-                  <p className="text-xs text-center text-muted-foreground mb-2">or pick an emoji</p>
+                  <p className="text-xs text-center text-muted-foreground mb-2">или выберите эмодзи</p>
 
                   <div className="grid grid-cols-8 gap-2">
                     {avatarEmojis.map((emoji) => (
@@ -1014,7 +1014,7 @@ export default function PlayerGamePage({
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center gap-2">
                       <LanguagesIcon className="w-4 h-4" />
-                      Select Quiz Questions/Answer Language
+                      Язык вопросов и ответов
                     </label>
                     <Select
                       value={selectedLanguage}
@@ -1053,10 +1053,10 @@ export default function PlayerGamePage({
                   {joining ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Joining...
+                      Подключение...
                     </>
                   ) : (
-                    "Join"
+                    "Присоединиться"
                   )}
                 </Button>
               </form>
@@ -1082,7 +1082,7 @@ export default function PlayerGamePage({
           <BackgroundEffects theme={theme} />
           <div className="text-center relative z-10">
             <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
-            <p className="text-muted-foreground">Connecting to game...</p>
+            <p className="text-muted-foreground">Подключаемся к игре...</p>
           </div>
         </div>
       </ThemeProvider>
@@ -1114,12 +1114,12 @@ export default function PlayerGamePage({
           <BackgroundEffects theme={theme} />
           <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div className="text-center mb-8 space-y-2">
-              <p className="text-xs uppercase tracking-[0.3em] text-primary/80">Lobby</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-primary/80">Лобби</p>
               <h1 className="text-3xl sm:text-4xl font-black tracking-tight">
-                {gameState.quizTitle || "Get ready for the quiz"}
+                {gameState.quizTitle || "Готовьтесь к викторине"}
               </h1>
               <p className="text-sm sm:text-base text-muted-foreground">
-                Warm up while we set the stage. Here&apos;s how to score big and use your power-ups wisely.
+                Пока всё готовится, ознакомьтесь с правилами: как набирать больше очков и использовать усиления.
               </p>
             </div>
 
@@ -1131,7 +1131,7 @@ export default function PlayerGamePage({
                       playerAvatar.startsWith("/") ? (
                         <img
                           src={playerAvatar}
-                          alt="Avatar"
+                          alt="Аватар"
                           className="w-20 h-20 rounded-full object-cover ring-2 ring-primary shadow-lg"
                         />
                       ) : (
@@ -1145,23 +1145,23 @@ export default function PlayerGamePage({
                       </div>
                     )}
                     <div className="space-y-1">
-                      <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">You&apos;re in</p>
+                      <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Вы в игре</p>
                       <h2 className="text-2xl sm:text-3xl font-bold">{playerName}</h2>
                       <p className="text-muted-foreground">
-                        Waiting for the host to start the game...
+                        Ждём, пока ведущий начнёт игру...
                       </p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="rounded-xl border border-border/60 bg-primary/10 px-4 py-3 text-left shadow-inner">
-                      <p className="text-xs uppercase tracking-wide text-primary/80">Players joined</p>
+                      <p className="text-xs uppercase tracking-wide text-primary/80">Игроков в игре</p>
                       <p className="text-2xl font-bold tabular-nums">
                         {gameState.players.length}
                       </p>
                     </div>
                     <div className="rounded-xl border border-border/60 bg-card/70 px-4 py-3 text-left shadow-inner">
-                      <p className="text-xs uppercase tracking-wide text-muted-foreground">Room code</p>
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground">Код комнаты</p>
                       <p className="text-2xl font-bold tabular-nums">{gameCode.toUpperCase()}</p>
                     </div>
                   </div>
@@ -1178,8 +1178,8 @@ export default function PlayerGamePage({
                   <div className="p-6 sm:p-7 space-y-4 text-left">
                     <div className="flex items-center justify-between gap-3">
                       <div>
-                        <p className="text-xs uppercase tracking-[0.25em] text-primary/80">How to play</p>
-                        <h3 className="text-xl sm:text-2xl font-semibold">Rules &amp; scoring</h3>
+                        <p className="text-xs uppercase tracking-[0.25em] text-primary/80">Как играть</p>
+                        <h3 className="text-xl sm:text-2xl font-semibold">Правила и очки</h3>
                       </div>
                       <div className="h-12 w-12 rounded-full bg-primary/15 text-primary flex items-center justify-center shadow-inner">
                         <Trophy className="w-6 h-6" />
@@ -1190,40 +1190,40 @@ export default function PlayerGamePage({
                       <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 space-y-1 backdrop-blur-sm">
                         <div className="flex items-center gap-2 text-sm font-semibold">
                           <AlarmClock className="w-4 h-4" />
-                          Beat the clock
+                          Успейте по таймеру
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                          Timer counts down each question. Single choice locks in instantly; multi-select needs Submit before zero.
+                          На каждый вопрос идёт обратный отсчёт. Одиночный выбор отправляется сразу, а в мультивыборе нужно нажать «Отправить ответ» до нуля.
                         </p>
                       </div>
 
                       <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 space-y-1 backdrop-blur-sm">
                         <div className="flex items-center gap-2 text-sm font-semibold">
                           <Zap className="w-4 h-4" />
-                          Speed bonus
+                          Бонус за скорость
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                          Every question has base points. Answering instantly can add up to +50% bonus; slower answers earn less.
+                          У каждого вопроса есть базовые очки. Быстрый ответ может дать до +50% бонуса, более медленный — меньше.
                         </p>
                       </div>
 
                       <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 space-y-1 backdrop-blur-sm">
                         <div className="flex items-center gap-2 text-sm font-semibold">
                           <Target className="w-4 h-4" />
-                          Multi-select fairness
+                          Честный мультивыбор
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                          Points scale with accuracy: (correct picks − wrong picks) / total correct. Wrong or no answer = zero.
+                          Очки зависят от точности: (верные выборы − неверные) / всего верных. Неправильный ответ или пропуск = 0.
                         </p>
                       </div>
 
                       <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 space-y-1 backdrop-blur-sm">
                         <div className="flex items-center gap-2 text-sm font-semibold">
                           <Sparkles className="w-4 h-4" />
-                          Finish strong
+                          Финишируйте мощно
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                          Scores update each round and feed the leaderboard. Double Points (when enabled) multiplies after bonuses.
+                          Очки обновляются после каждого раунда и формируют таблицу лидеров. «Удвоение очков» (если включено) применяется после бонусов.
                         </p>
                       </div>
                     </div>
@@ -1235,7 +1235,7 @@ export default function PlayerGamePage({
                     <div className="flex items-center gap-2">
                       <Zap className="w-4 h-4 text-primary" />
                       <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
-                        Power-ups
+                        Усиления
                       </p>
                     </div>
 
@@ -1244,14 +1244,12 @@ export default function PlayerGamePage({
                         {powerUpConfig.hintCount > 0 && (
                           <div className="rounded-xl border border-border/60 bg-primary/10 px-4 py-3 space-y-1">
                             <div className="flex items-center gap-2 font-semibold text-sm">
-                              <Lightbulb className="w-4 h-4" />
-                              Hint
-                            </div>
+                              <Lightbulb className="w-4 h-4" />Подсказка</div>
                             <p className="text-sm text-muted-foreground leading-relaxed">
-                              Reveal the question hint (when available). Uses {powerUpConfig.hintCount > 1 ? "one of your " : "your "}limited hints.
+                              Открывает подсказку к вопросу (если есть). Использует {powerUpConfig.hintCount > 1 ? "одну из ваших " : "вашу "}ограниченных подсказок.
                             </p>
                             <p className="text-xs font-medium text-primary">
-                              {powerUpConfig.hintCount} ready
+                              Доступно: {powerUpConfig.hintCount}
                             </p>
                           </div>
                         )}
@@ -1259,14 +1257,12 @@ export default function PlayerGamePage({
                         {powerUpConfig.copyAnswerCount > 0 && (
                           <div className="rounded-xl border border-border/60 bg-primary/10 px-4 py-3 space-y-1">
                             <div className="flex items-center gap-2 font-semibold text-sm">
-                              <Users className="w-4 h-4" />
-                              Copy
-                            </div>
+                              <Users className="w-4 h-4" />Копирование</div>
                             <p className="text-sm text-muted-foreground leading-relaxed">
-                              Pick a teammate and mirror their answer. If they don&apos;t answer in time, you miss out too.
+                              Выберите игрока и скопируйте его ответ. Если он не успеет ответить, вы тоже не получите ответ.
                             </p>
                             <p className="text-xs font-medium text-primary">
-                              {powerUpConfig.copyAnswerCount} ready
+                              Доступно: {powerUpConfig.copyAnswerCount}
                             </p>
                           </div>
                         )}
@@ -1274,21 +1270,19 @@ export default function PlayerGamePage({
                         {powerUpConfig.doublePointsCount > 0 && (
                           <div className="rounded-xl border border-border/60 bg-primary/10 px-4 py-3 space-y-1">
                             <div className="flex items-center gap-2 font-semibold text-sm">
-                              <Sparkles className="w-4 h-4" />
-                              2x Points
-                            </div>
+                              <Sparkles className="w-4 h-4" />×2 очков</div>
                             <p className="text-sm text-muted-foreground leading-relaxed">
-                              Doubles your score for that question after speed and accuracy are calculated.
+                              Удваивает ваши очки за этот вопрос после расчёта скорости и точности.
                             </p>
                             <p className="text-xs font-medium text-primary">
-                              {powerUpConfig.doublePointsCount} ready
+                              Доступно: {powerUpConfig.doublePointsCount}
                             </p>
                           </div>
                         )}
                       </div>
                     ) : (
                       <div className="rounded-xl border border-dashed border-border/70 px-4 py-5 text-sm text-muted-foreground text-center">
-                        The host hasn&apos;t enabled power-ups for this game—focus on speed and accuracy.
+                        Ведущий не включил усиления для этой игры — делайте ставку на скорость и точность.
                       </div>
                     )}
                   </div>
@@ -1340,7 +1334,7 @@ export default function PlayerGamePage({
               />
             )}
             <p className="text-sm opacity-70">
-              Waiting for host to continue...
+              Ожидание продолжения от ведущего...
             </p>
           </div>
         </div>
@@ -1370,9 +1364,9 @@ export default function PlayerGamePage({
           >
             <div className="flex flex-col items-center gap-4 text-amber-200">
               <AlarmClock className="w-14 h-14 animate-bounce" />
-              <h2 className="text-3xl font-bold text-white">Time&apos;s up!</h2>
+              <h2 className="text-3xl font-bold text-white">Время вышло!</h2>
               <p className="text-lg text-amber-100/80 max-w-xl">
-                The host will reveal the answers shortly. Sit tight!
+                Ведущий скоро откроет правильные ответы. Подождите немного!
               </p>
             </div>
           </div>
@@ -1453,19 +1447,19 @@ export default function PlayerGamePage({
               }`}
             >
               <p className="text-2xl font-bold">
-                {answerResult.correct ? "Correct!" : "Wrong!"}
+                {answerResult.correct ? "Верно!" : "Неверно!"}
               </p>
-              <p className="text-lg">+{answerResult.points} points</p>
-              <p className="text-sm">Position: #{answerResult.position}</p>
+              <p className="text-lg">+{answerResult.points} очков</p>
+              <p className="text-sm">Позиция: #{answerResult.position}</p>
             </div>
           )}
 
-          {/* Power-ups Section */}
+          {/* Усиления Section */}
           {gameState.status === "QUESTION" && !hasSubmitted && (powerUpState.hintsRemaining > 0 || powerUpState.copyRemaining > 0 || powerUpState.doubleRemaining > 0) && (
             <div className="px-3 sm:px-8 py-3 sm:py-4 border-t border-border">
               <div className="flex items-center gap-2 mb-2 sm:mb-3">
                 <Zap className="w-4 h-4" />
-                <span className="text-xs sm:text-sm font-medium">Power-ups</span>
+                <span className="text-xs sm:text-sm font-medium">Усиления</span>
               </div>
 
               <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
@@ -1479,14 +1473,14 @@ export default function PlayerGamePage({
                     className="flex flex-col h-auto py-2 px-1 sm:px-2 min-h-[68px] sm:min-h-[76px]"
                   >
                     <Lightbulb className="w-5 h-5 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" />
-                    <span className="text-[10px] sm:text-xs">Hint</span>
+                    <span className="text-[10px] sm:text-xs">Подсказка</span>
                     <span className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">
-                      {powerUpState.hintsRemaining} left
+                      {powerUpState.hintsRemaining} осталось
                     </span>
                   </Button>
                 )}
 
-                {/* Copy Answer Power-up */}
+                {/* Копирование ответа Power-up */}
                 {powerUpState.copyRemaining > 0 && (
                   <Button
                     variant={selectedPowerUps.has(PowerUpType.COPY) ? "default" : "outline"}
@@ -1496,9 +1490,9 @@ export default function PlayerGamePage({
                     className="flex flex-col h-auto py-2 px-1 sm:px-2 min-h-[68px] sm:min-h-[76px]"
                   >
                     <Users className="w-5 h-5 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" />
-                    <span className="text-[10px] sm:text-xs">Copy</span>
+                    <span className="text-[10px] sm:text-xs">Копирование</span>
                     <span className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">
-                      {powerUpState.copyRemaining} left
+                      {powerUpState.copyRemaining} осталось
                     </span>
                   </Button>
                 )}
@@ -1513,24 +1507,24 @@ export default function PlayerGamePage({
                     className="flex flex-col h-auto py-2 px-1 sm:px-2 min-h-[68px] sm:min-h-[76px]"
                   >
                     <Sparkles className="w-5 h-5 sm:w-5 sm:h-5 mb-0.5 sm:mb-1" />
-                    <span className="text-[10px] sm:text-xs">2x</span>
+                    <span className="text-[10px] sm:text-xs">×2 очков</span>
                     <span className="text-[10px] sm:text-xs text-muted-foreground whitespace-nowrap">
-                      {powerUpState.doubleRemaining} left
+                      {powerUpState.doubleRemaining} осталось
                     </span>
                   </Button>
                 )}
               </div>
 
-              {/* Active Power-ups Feedback */}
+              {/* Active Усиления Feedback */}
               {(selectedPowerUps.has(PowerUpType.HINT) || selectedPowerUps.has(PowerUpType.COPY) || selectedPowerUps.has(PowerUpType.DOUBLE)) && (
                 <div className="mt-3 space-y-2">
-                  {/* Hint Active Badge */}
+                  {/* Подсказка активна Badge */}
                   {selectedPowerUps.has(PowerUpType.HINT) && (
                     <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                       <div className="flex items-center gap-2">
                         <Lightbulb className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                         <p className="text-xs font-medium text-blue-900 dark:text-blue-100">
-                          Hint Active
+                          Подсказка активна
                         </p>
                       </div>
                     </div>
@@ -1542,7 +1536,7 @@ export default function PlayerGamePage({
                       <div className="flex items-center gap-2">
                         <Users className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                         <p className="text-xs font-medium text-purple-900 dark:text-purple-100">
-                          Copy Active - Will copy from {gameState.players.find(p => p.id === copiedPlayerId)?.name || 'selected player'}
+                          Копирование активно — копируем у {gameState.players.find(p => p.id === copiedPlayerId)?.name || 'выбранного игрока'}
                         </p>
                       </div>
                     </div>
@@ -1554,7 +1548,7 @@ export default function PlayerGamePage({
                       <div className="flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                         <p className="text-xs font-medium text-amber-900 dark:text-amber-100">
-                          Double Points Active - Your score will be doubled!
+                          Удвоение очков активно — ваши очки будут удвоены!
                         </p>
                       </div>
                     </div>
@@ -1676,7 +1670,7 @@ export default function PlayerGamePage({
                   size="lg"
                   className="w-full"
                 >
-                  Submit Answer ({selectedAnswers.size} selected)
+                  Отправить ответ ({selectedAnswers.size} выбрано)
                 </Button>
               </div>
             )}
@@ -1697,7 +1691,7 @@ export default function PlayerGamePage({
                   {easterEggClicked.has(effectiveCurrentQuestion.id) ? (
                     <>
                       <Check className="w-4 h-4 mr-2" />
-                      Clicked!
+                      Нажато!
                     </>
                   ) : (
                     <>
@@ -1716,7 +1710,7 @@ export default function PlayerGamePage({
           {hasSubmitted && !isRevealing && (
             <div className="px-8 py-4 text-center text-muted-foreground">
               <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2" />
-              Waiting for time to expire...
+              Ожидаем завершения времени...
             </div>
           )}
 
@@ -1731,7 +1725,7 @@ export default function PlayerGamePage({
                 {showLanguageSelector ? (
                   <div className="p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">Select Quiz Questions/Answer Language</span>
+                    <span className="text-sm font-medium">Язык вопросов и ответов</span>
                       <button
                         onClick={() => setShowLanguageSelector(false)}
                         className="text-muted-foreground hover:text-foreground"
@@ -1780,9 +1774,7 @@ export default function PlayerGamePage({
           <DialogContent>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <Lightbulb className="w-5 h-5" />
-                Hint
-              </DialogTitle>
+                <Lightbulb className="w-5 h-5" />Подсказка</DialogTitle>
             </DialogHeader>
             <div className="py-6">
               <p className="text-lg">
@@ -1794,7 +1786,7 @@ export default function PlayerGamePage({
               </p>
             </div>
             <DialogFooter>
-              <Button onClick={() => setShowHintModal(false)}>Close</Button>
+              <Button onClick={() => setShowHintModal(false)}>Закрыть</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -1805,10 +1797,10 @@ export default function PlayerGamePage({
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Users className="w-5 h-5" />
-                Copy Answer
+                Копирование ответа
               </DialogTitle>
               <DialogDescription>
-                Select a player to copy their answer. This is a blind copy - you won't see their choice.
+                Выберите игрока, чей ответ вы скопируете. Копирование «вслепую»: вы не увидите его выбор.
               </DialogDescription>
             </DialogHeader>
             <div className="py-4 space-y-2 max-h-96 overflow-y-auto">
@@ -1896,13 +1888,13 @@ export default function PlayerGamePage({
               )}
               <p className="text-3xl sm:text-4xl font-bold text-primary">#{myPosition}</p>
               <p className="text-base sm:text-lg font-medium truncate max-w-full px-2">{playerName}</p>
-              <p className="text-xl sm:text-2xl font-bold mt-2">{myScore?.score || 0} pts</p>
+              <p className="text-xl sm:text-2xl font-bold mt-2">{myScore?.score || 0} очков</p>
             </CardContent>
           </Card>
 
           {/* Leaderboard */}
           <h2 className="text-base sm:text-lg font-bold mb-2 sm:mb-3 relative z-10">
-            {isFinished ? "Final Results" : "Leaderboard"}
+            {isFinished ? "Финальные результаты" : "Таблица лидеров"}
           </h2>
           <div className="space-y-1.5 sm:space-y-2 relative z-10">
             {displayScores.slice(0, 10).map((player, index) => {
@@ -1935,7 +1927,7 @@ export default function PlayerGamePage({
                   )}
                   <span className={`flex-1 truncate text-sm sm:text-base ${isMe ? "font-bold" : ""}`}>
                     {player.name}
-                    {isMe && " (You)"}
+                    {isMe && " (Вы)"}
                   </span>
 
                   {/* Power-up indicators */}
@@ -1966,12 +1958,12 @@ export default function PlayerGamePage({
 
           {isFinished && (
             <div className="mt-6 sm:mt-8 text-center space-y-3 sm:space-y-4 relative z-10">
-              <p className="text-sm sm:text-base text-muted-foreground">Thanks for playing!</p>
+              <p className="text-sm sm:text-base text-muted-foreground">Спасибо за игру!</p>
 
               {showGeneratingMessage && (
                 <div className="flex items-center justify-center gap-2 text-sm sm:text-base text-muted-foreground">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Generating your certificate...</span>
+                  <span>Генерируем ваш сертификат...</span>
                 </div>
               )}
 
@@ -1991,7 +1983,7 @@ export default function PlayerGamePage({
                   className="w-full sm:w-auto"
                   onClick={() => router.push("/play")}
                 >
-                  Play Again
+                  Играть снова
                 </Button>
               </div>
             </div>
