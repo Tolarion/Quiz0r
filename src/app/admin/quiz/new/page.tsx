@@ -23,6 +23,19 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+function localizeCreateQuizError(rawError?: string) {
+  const normalized = rawError?.trim().toLowerCase();
+
+  switch (normalized) {
+    case "title is required":
+      return "Название викторины обязательно";
+    case "failed to create quiz":
+      return "Не удалось создать викторину";
+    default:
+      return rawError;
+  }
+}
+
 export default function NewQuizPage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
@@ -35,7 +48,7 @@ export default function NewQuizPage() {
     setError("");
 
     if (!title.trim()) {
-      setError("Title is required");
+      setError("Название викторины обязательно");
       return;
     }
 
@@ -53,10 +66,12 @@ export default function NewQuizPage() {
         router.push(`/admin/quiz/${quiz.id}/questions`);
       } else {
         const data = await res.json();
-        setError(data.error || "Failed to create quiz");
+        setError(
+          localizeCreateQuizError(data.error) || "Не удалось создать викторину"
+        );
       }
     } catch {
-      setError("Failed to create quiz");
+      setError("Не удалось создать викторину");
     } finally {
       setLoading(false);
     }
@@ -70,23 +85,25 @@ export default function NewQuizPage() {
         className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Quizzes
+        Назад к викторинам
       </Link>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl sm:text-2xl">Create New Quiz</CardTitle>
+          <CardTitle className="text-xl sm:text-2xl">
+            Создать викторину
+          </CardTitle>
           <CardDescription>
-            Give your quiz a name and description, then add questions.
+            Укажите название и описание викторины, затем добавьте вопросы.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="title">Quiz Title</Label>
+              <Label htmlFor="title">Название викторины</Label>
               <Input
                 id="title"
-                placeholder="e.g., General Knowledge Challenge"
+                placeholder="Например: Музыкальная викторина 90-х"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 disabled={loading}
@@ -95,10 +112,10 @@ export default function NewQuizPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description (optional)</Label>
+              <Label htmlFor="description">Описание (необязательно)</Label>
               <Textarea
                 id="description"
-                placeholder="What is this quiz about?"
+                placeholder="О чём эта викторина?"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={loading}
@@ -115,7 +132,7 @@ export default function NewQuizPage() {
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                {loading ? "Creating..." : "Create & Add Questions"}
+                {loading ? "Создаём..." : "Создать и добавить вопросы"}
                 <ChevronRight className="w-4 h-4 ml-2" />
               </Button>
               <Link href="/admin" className="w-full sm:w-auto">
@@ -125,7 +142,7 @@ export default function NewQuizPage() {
                   disabled={loading}
                   className="w-full"
                 >
-                  Cancel
+                  Отмена
                 </Button>
               </Link>
             </div>
@@ -138,7 +155,7 @@ export default function NewQuizPage() {
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
             <Lightbulb className="w-4 h-4 text-primary" />
-            What happens next?
+            Что дальше?
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
@@ -148,9 +165,10 @@ export default function NewQuizPage() {
                 1
               </div>
               <div>
-                <p className="font-medium text-sm">Add Questions</p>
+                <p className="font-medium text-sm">Добавьте вопросы</p>
                 <p className="text-xs text-muted-foreground">
-                  Create single or multi-select questions with images
+                  Создавайте вопросы с одним или несколькими вариантами ответа и
+                  изображениями
                 </p>
               </div>
             </div>
@@ -159,9 +177,9 @@ export default function NewQuizPage() {
                 2
               </div>
               <div>
-                <p className="font-medium text-sm">Configure Power-ups</p>
+                <p className="font-medium text-sm">Настройте усиления</p>
                 <p className="text-xs text-muted-foreground">
-                  Enable hints, copy answers, and double points
+                  Включите подсказки, копирование ответов и двойные очки
                 </p>
               </div>
             </div>
@@ -170,9 +188,9 @@ export default function NewQuizPage() {
                 3
               </div>
               <div>
-                <p className="font-medium text-sm">Customize Theme</p>
+                <p className="font-medium text-sm">Оформите тему</p>
                 <p className="text-xs text-muted-foreground">
-                  Choose colors, backgrounds, and visual effects
+                  Выберите цвета, фоны и визуальные эффекты
                 </p>
               </div>
             </div>
@@ -181,9 +199,9 @@ export default function NewQuizPage() {
                 4
               </div>
               <div>
-                <p className="font-medium text-sm">Host Your Game</p>
+                <p className="font-medium text-sm">Запустите игру</p>
                 <p className="text-xs text-muted-foreground">
-                  Start a session and share the game code
+                  Начните сессию и поделитесь кодом игры
                 </p>
               </div>
             </div>
@@ -195,15 +213,17 @@ export default function NewQuizPage() {
       <div className="grid gap-3 sm:grid-cols-3">
         <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30">
           <Zap className="w-4 h-4 text-amber-500" />
-          <span className="text-sm text-muted-foreground">Power-ups</span>
+          <span className="text-sm text-muted-foreground">Усиления</span>
         </div>
         <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30">
           <Languages className="w-4 h-4 text-blue-500" />
-          <span className="text-sm text-muted-foreground">Multi-language</span>
+          <span className="text-sm text-muted-foreground">
+            Мультиязычность
+          </span>
         </div>
         <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30">
           <Palette className="w-4 h-4 text-purple-500" />
-          <span className="text-sm text-muted-foreground">Custom themes</span>
+          <span className="text-sm text-muted-foreground">Пользовательские темы</span>
         </div>
       </div>
     </div>
