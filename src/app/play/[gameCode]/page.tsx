@@ -25,7 +25,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { PowerUpType, PlayerPowerUpState, SupportedLanguages, type LanguageCode, type QuestionDataWithTranslations, type PlayerViewState } from "@/types";
-import { Check, X, Trophy, Medal, Award, Loader2, Upload, Layers, Bell, UserX, Zap, Lightbulb, Users, Sparkles, Languages as LanguagesIcon, AlarmClock, Globe, ChevronUp, Target } from "lucide-react";
+import { Check, X, Trophy, Loader2, Upload, Layers, Bell, UserX, Zap, Lightbulb, Users, Sparkles, Languages as LanguagesIcon, AlarmClock, Globe, ChevronUp, Target } from "lucide-react";
 import { ThemeProvider, getAnswerColor, getSelectedAnswerStyle } from "@/components/theme/ThemeProvider";
 import { BackgroundEffects } from "@/components/theme/BackgroundEffects";
 import {
@@ -283,20 +283,23 @@ export default function PlayerGamePage({
     translations?: Record<string, any>,
     field?: string
   ): string => {
-    // If no content, return empty string
-    if (!content) return "";
+    const normalizedContent = content?.trim();
 
     // If English is selected or no translations available, return original content
-    if (selectedLanguage === "en" || !translations) return content;
+    if (selectedLanguage === "en" || !translations) return normalizedContent || "";
 
     // Try to get translation for the selected language
     const translation = translations[selectedLanguage];
-    if (translation && field && translation[field]) {
-      return translation[field];
+    const translatedValue =
+      translation && field && typeof translation[field] === "string"
+        ? translation[field].trim()
+        : "";
+    if (translatedValue) {
+      return translatedValue;
     }
 
     // Fallback to original content (English)
-    return content;
+    return normalizedContent || "";
   };
 
   const renderedQuestion = useMemo(() => {
@@ -1450,7 +1453,6 @@ export default function PlayerGamePage({
                 {answerResult.correct ? "Верно!" : "Неверно!"}
               </p>
               <p className="text-lg">+{answerResult.points} очков</p>
-              <p className="text-sm">Позиция: #{answerResult.position}</p>
             </div>
           )}
 
@@ -1855,7 +1857,6 @@ export default function PlayerGamePage({
     const myScore = displayScores.find(
       (s) => s.name.toLowerCase() === playerName.toLowerCase()
     );
-    const myPosition = myScore?.position || 0;
     const showGeneratingMessage =
       certificateState === "checking" || certificateState === "generating";
 
@@ -1870,23 +1871,9 @@ export default function PlayerGamePage({
           }}
         >
           <BackgroundEffects theme={theme} />
-          {/* My Position */}
+          {/* My Score */}
           <Card className="mb-4 sm:mb-6 relative z-10 shadow-xl border-2">
             <CardContent className="pt-4 sm:pt-6 text-center">
-              {myPosition <= 3 && isFinished && (
-                <div className="mb-2">
-                  {myPosition === 1 && (
-                    <Trophy className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-yellow-500" />
-                  )}
-                  {myPosition === 2 && (
-                    <Medal className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-gray-400" />
-                  )}
-                  {myPosition === 3 && (
-                    <Award className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-amber-600" />
-                  )}
-                </div>
-              )}
-              <p className="text-3xl sm:text-4xl font-bold text-primary">#{myPosition}</p>
               <p className="text-base sm:text-lg font-medium truncate max-w-full px-2">{playerName}</p>
               <p className="text-xl sm:text-2xl font-bold mt-2">{myScore?.score || 0} очков</p>
             </CardContent>

@@ -153,7 +153,6 @@ const t = {
     createFirst: "Создать первую викторину",
     aiBadge: "AI",
     translated: "Есть переводы",
-    englishOnly: "Только английский",
     moreLanguages: (count: number) => `+${count} ещё`,
     edit: "Редактировать",
     play: "Играть",
@@ -764,15 +763,15 @@ export default function AdminDashboard() {
                   </p>
                 )}
                 <div className="flex flex-wrap items-center gap-2 mb-4">
-                  <Badge
-                    variant="secondary"
-                    className="flex items-center gap-1"
-                  >
-                    <Globe className="w-3 h-3" />
-                    {quiz.translationLanguages?.length
-                      ? t.list.translated
-                      : t.list.englishOnly}
-                  </Badge>
+                  {quiz.translationLanguages?.length ? (
+                    <Badge
+                      variant="secondary"
+                      className="flex items-center gap-1"
+                    >
+                      <Globe className="w-3 h-3" />
+                      {t.list.translated}
+                    </Badge>
+                  ) : null}
                   {quiz.translationLanguages?.slice(0, 4).map((langCode) => {
                     const language = LanguageMap[langCode as LanguageCode];
                     if (!language) {
