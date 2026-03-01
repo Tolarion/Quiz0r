@@ -270,7 +270,7 @@ export default function HostControlPage({
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-pulse text-xl font-bold text-primary">
-            Connecting to game...
+            Подключение к игре...
           </div>
         </div>
       </div>
@@ -282,10 +282,10 @@ export default function HostControlPage({
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="text-xl font-bold text-muted-foreground">
-            Game Cancelled
+            Игра отменена
           </div>
           <Link href="/host">
-            <Button>Back to Host</Button>
+            <Button>Назад к панели ведущего</Button>
           </Link>
         </div>
       </div>
@@ -297,10 +297,10 @@ export default function HostControlPage({
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="text-xl font-bold text-muted-foreground">
-            Game not found
+            Игра не найдена
           </div>
           <Link href="/host">
-            <Button>Back to Host</Button>
+            <Button>Назад к панели ведущего</Button>
           </Link>
         </div>
       </div>
@@ -315,6 +315,16 @@ export default function HostControlPage({
     REVEALING: "bg-purple-500",
     SCOREBOARD: "bg-orange-500",
     FINISHED: "bg-gray-500",
+  };
+
+  const statusLabels: Record<string, string> = {
+    WAITING: "Ожидание",
+    ACTIVE: "Активно",
+    QUESTION: "Вопрос",
+    SECTION: "Раздел",
+    REVEALING: "Показ ответа",
+    SCOREBOARD: "Таблица лидеров",
+    FINISHED: "Завершено",
   };
 
   const displayScores = scores.length > 0
@@ -346,7 +356,7 @@ export default function HostControlPage({
             <div className="flex items-center gap-1.5 sm:gap-2">
               <span className="font-mono font-bold text-base sm:text-lg">{gameCode}</span>
               <Badge className={`${statusColors[gameState.status]} text-xs sm:text-sm`}>
-                {gameState.status}
+                {statusLabels[gameState.status] || gameState.status}
               </Badge>
             </div>
           </div>
@@ -362,24 +372,24 @@ export default function HostControlPage({
                 {copied ? (
                   <>
                     <Check className="w-4 h-4 text-green-500" />
-                    <span className="hidden sm:inline">Copied!</span>
+                    <span className="hidden sm:inline">Скопировано!</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-4 h-4" />
-                    <span className="hidden sm:inline">Copy URL</span>
+                    <span className="hidden sm:inline">Копировать ссылку</span>
                   </>
                 )}
               </Button>
             )}
             <Button variant="outline" size="sm" onClick={openMonitor} className="px-2 sm:px-3">
               <Eye className="w-4 h-4" />
-              <span className="hidden sm:inline ml-2">Player Monitor</span>
+              <span className="hidden sm:inline ml-2">Монитор игроков</span>
               <ExternalLink className="w-3 h-3 ml-1 sm:ml-2 hidden sm:inline" />
             </Button>
             <Button variant="outline" size="sm" onClick={openDisplay} className="px-2 sm:px-3">
               <Monitor className="w-4 h-4" />
-              <span className="hidden sm:inline ml-2">Open Display</span>
+              <span className="hidden sm:inline ml-2">Открыть экран</span>
               <ExternalLink className="w-3 h-3 ml-1 sm:ml-2 hidden sm:inline" />
             </Button>
           </div>
@@ -396,7 +406,7 @@ export default function HostControlPage({
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg sm:text-xl">{gameState.quizTitle}</CardTitle>
                   <Badge className={`${statusColors[gameState.status]} text-xs`}>
-                    {gameState.status}
+                    {statusLabels[gameState.status] || gameState.status}
                   </Badge>
                 </div>
               </CardHeader>
@@ -404,7 +414,7 @@ export default function HostControlPage({
                 {/* Stats row */}
                 <div className="flex items-center gap-4 sm:gap-8 text-sm flex-wrap">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-muted-foreground">Q:</span>
+                    <span className="text-muted-foreground">В:</span>
                     <span className="font-medium">
                       {gameState.currentQuestionNumber}/{gameState.totalQuestions}
                     </span>
@@ -438,7 +448,7 @@ export default function HostControlPage({
                       `}>
                         {timeRemaining}
                       </span>
-                      <span className="text-muted-foreground text-sm">seconds</span>
+                      <span className="text-muted-foreground text-sm">секунд</span>
                     </div>
 
                     {/* Answered progress */}
@@ -453,7 +463,7 @@ export default function HostControlPage({
                       return (
                         <div className="space-y-1.5">
                           <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">Answered</span>
+                            <span className="text-muted-foreground">Ответили</span>
                             <span className="font-medium">{answeredCount} / {activeAdmitted.length}</span>
                           </div>
                           <Progress value={progressPercent} className="h-2" />
@@ -476,9 +486,7 @@ export default function HostControlPage({
                     <p className="text-muted-foreground">
                       {gameState.players.length === 0
                         ? "Ожидание подключения игроков..."
-                        : `${gameState.players.length} player${
-                            gameState.players.length !== 1 ? "s" : ""
-                          } готово`}
+                        : `Готово игроков: ${gameState.players.length}`}
                     </p>
                     <Button
                       onClick={handleStartGame}
@@ -503,7 +511,7 @@ export default function HostControlPage({
                 {gameState.status === "ACTIVE" && (
                   <div className="space-y-4 text-center py-4">
                     <Loader2 className="w-8 h-8 animate-spin mx-auto text-muted-foreground" />
-                    <p className="text-muted-foreground">Starting game...</p>
+                    <p className="text-muted-foreground">Запуск игры...</p>
                   </div>
                 )}
 
@@ -511,9 +519,9 @@ export default function HostControlPage({
                   <div className="space-y-4">
                     <div className="p-4 bg-muted rounded-lg">
                       <p className="font-medium mb-2 flex items-center gap-2">
-                        Current Question:
+                        Текущий вопрос:
                         {currentQuestion?.easterEggEnabled && (
-                          <span className="text-lg" title="This question has an easter egg">
+                          <span className="text-lg" title="В этом вопросе есть пасхалка">
                             🥚
                           </span>
                         )}
@@ -524,14 +532,14 @@ export default function HostControlPage({
                           ? "Множественный выбор"
                           : "Одиночный выбор"}{" "}
                         • {currentQuestion?.points} баллов •{" "}
-                        {currentQuestion?.timeLimit}s
+                        {currentQuestion?.timeLimit}с
                       </p>
                     </div>
                     {currentQuestion?.hostNotes && (
                       <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
                           <StickyNote className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                          <p className="font-medium text-amber-800 dark:text-amber-300 text-sm">Host Notes</p>
+                          <p className="font-medium text-amber-800 dark:text-amber-300 text-sm">Заметки ведущего</p>
                         </div>
                         <p className="text-amber-900 dark:text-amber-200 text-sm whitespace-pre-wrap">{currentQuestion.hostNotes}</p>
                       </div>
@@ -545,12 +553,12 @@ export default function HostControlPage({
                       return (
                         <div className="flex items-center justify-between">
                           <div className="text-sm text-muted-foreground">
-                            {answeredCount} of {activeAdmitted.length} players answered
+                            Ответили: {answeredCount} из {activeAdmitted.length} игроков
                           </div>
                           {allAnswered && (
                             <Button onClick={skipTimer} variant="secondary" size="sm">
                               <FastForward className="w-4 h-4 mr-2" />
-                              Skip Timer
+                              Пропустить таймер
                             </Button>
                           )}
                         </div>
@@ -564,7 +572,7 @@ export default function HostControlPage({
                     <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">
                         <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                        <p className="font-medium text-indigo-800 dark:text-indigo-300">Section</p>
+                        <p className="font-medium text-indigo-800 dark:text-indigo-300">Раздел</p>
                       </div>
                       <p className="text-xl font-bold text-indigo-900 dark:text-indigo-100">
                         {currentQuestion?.questionText}
@@ -579,17 +587,17 @@ export default function HostControlPage({
                       <div className="rounded-lg overflow-hidden border">
                         <img
                           src={currentQuestion.imageUrl}
-                          alt="Section"
+                          alt="Раздел"
                           className="max-h-48 mx-auto"
                         />
                       </div>
                     )}
                     <p className="text-sm text-muted-foreground">
-                      Players are seeing this section slide. Click &quot;Continue&quot; when готово to proceed.
+                      Игроки сейчас видят слайд раздела. Нажмите «Продолжить», когда будете готовы.
                     </p>
                     <Button onClick={nextQuestion} size="lg" className="w-full">
                       <SkipForward className="w-4 h-4 mr-2" />
-                      Continue
+                      Продолжить
                     </Button>
                   </div>
                 )}
@@ -600,23 +608,23 @@ export default function HostControlPage({
                       <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg flex items-center justify-between">
                         <div className="flex items-center gap-2 text-amber-800 dark:text-amber-200">
                           <Bell className="w-4 h-4" />
-                          <span className="font-medium">Time&apos;s up! Reveal answers when готово.</span>
+                          <span className="font-medium">Время вышло! Покажите ответы, когда будете готовы.</span>
                         </div>
                         <Button onClick={revealAnswers} variant="secondary" size="sm">
                           <Eye className="w-4 h-4 mr-2" />
-                          Reveal Answers
+                          Показать ответы
                         </Button>
                       </div>
                     ) : (
                       <p className="text-muted-foreground">
-                        Showing correct answer...
+                        Показываем правильный ответ...
                       </p>
                     )}
                     {currentQuestion?.hostNotes && (
                       <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
                           <StickyNote className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                          <p className="font-medium text-amber-800 dark:text-amber-300 text-sm">Host Notes</p>
+                          <p className="font-medium text-amber-800 dark:text-amber-300 text-sm">Заметки ведущего</p>
                         </div>
                         <p className="text-amber-900 dark:text-amber-200 text-sm whitespace-pre-wrap">{currentQuestion.hostNotes}</p>
                       </div>
@@ -634,7 +642,7 @@ export default function HostControlPage({
                         </div>
                         {nextQuestionPreview.section ? (
                           <div className="p-3 bg-indigo-100/70 dark:bg-indigo-800/30 rounded border border-indigo-200 dark:border-indigo-700">
-                            <p className="text-sm font-semibold text-indigo-900 dark:text-indigo-200 mb-1">Section</p>
+                            <p className="text-sm font-semibold text-indigo-900 dark:text-indigo-200 mb-1">Раздел</p>
                             <p className="text-indigo-900 dark:text-indigo-100">
                               {nextQuestionPreview.section.questionText}
                             </p>
@@ -662,7 +670,7 @@ export default function HostControlPage({
                               </div>
                               {nextQuestionPreview.question.hostNotes && (
                                 <p className="mt-1 text-xs text-blue-600 dark:text-blue-400 italic">
-                                  Notes: {nextQuestionPreview.question.hostNotes}
+                                  Заметки: {nextQuestionPreview.question.hostNotes}
                                 </p>
                               )}
                             </div>
@@ -678,17 +686,17 @@ export default function HostControlPage({
                         disabled={awaitingReveal}
                       >
                         <BarChart3 className="w-4 h-4 mr-2" />
-                        Show Scoreboard
+                        Показать таблицу лидеров
                       </Button>
                       {gameState.currentQuestionNumber < gameState.totalQuestions ? (
                         <Button onClick={nextQuestion} className="flex-1" disabled={awaitingReveal}>
                           <SkipForward className="w-4 h-4 mr-2" />
-                          Next Question
+                          Следующий вопрос
                         </Button>
                       ) : (
                         <Button onClick={endGame} variant="destructive" className="flex-1" disabled={awaitingReveal}>
                           <Square className="w-4 h-4 mr-2" />
-                          End Game
+                          Завершить игру
                         </Button>
                       )}
                     </div>
@@ -698,7 +706,7 @@ export default function HostControlPage({
                 {gameState.status === "SCOREBOARD" && (
                   <div className="space-y-4">
                     <p className="text-muted-foreground">
-                      Showing scoreboard...
+                      Показываем таблицу лидеров...
                     </p>
                     {/* Next Question Preview */}
                     {nextQuestionPreview && (
@@ -713,7 +721,7 @@ export default function HostControlPage({
                         </div>
                         {nextQuestionPreview.section ? (
                           <div className="p-3 bg-indigo-100/70 dark:bg-indigo-800/30 rounded border border-indigo-200 dark:border-indigo-700">
-                            <p className="text-sm font-semibold text-indigo-900 dark:text-indigo-200 mb-1">Section</p>
+                            <p className="text-sm font-semibold text-indigo-900 dark:text-indigo-200 mb-1">Раздел</p>
                             <p className="text-indigo-900 dark:text-indigo-100">
                               {nextQuestionPreview.section.questionText}
                             </p>
@@ -741,7 +749,7 @@ export default function HostControlPage({
                               </div>
                               {nextQuestionPreview.question.hostNotes && (
                                 <p className="mt-1 text-xs text-blue-600 dark:text-blue-400 italic">
-                                  Notes: {nextQuestionPreview.question.hostNotes}
+                                  Заметки: {nextQuestionPreview.question.hostNotes}
                                 </p>
                               )}
                             </div>
@@ -752,7 +760,7 @@ export default function HostControlPage({
                     {gameState.currentQuestionNumber < gameState.totalQuestions ? (
                       <Button onClick={nextQuestion} size="lg" className="w-full" disabled={awaitingReveal}>
                         <SkipForward className="w-4 h-4 mr-2" />
-                        Next Question
+                        Следующий вопрос
                       </Button>
                     ) : (
                       <Button
@@ -762,7 +770,7 @@ export default function HostControlPage({
                         className="w-full"
                       >
                         <Square className="w-4 h-4 mr-2" />
-                        End Game
+                        Завершить игру
                       </Button>
                     )}
                   </div>
@@ -771,7 +779,7 @@ export default function HostControlPage({
                 {gameState.status === "FINISHED" && (
                   <div className="space-y-4 text-center">
                     <p className="text-xl font-bold text-green-600">
-                      Game Complete!
+                      Игра завершена!
                     </p>
 
                     {/* Certificate Status Banner */}
@@ -788,7 +796,7 @@ export default function HostControlPage({
 
                     <Link href="/host">
                       <Button size="lg" className="w-full">
-                        Start New Game
+                        Начать новую игру
                       </Button>
                     </Link>
                   </div>
@@ -799,17 +807,17 @@ export default function HostControlPage({
                   <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg space-y-3">
                     <div className="flex items-center gap-2 text-amber-800 dark:text-amber-200">
                       <AlertTriangle className="w-5 h-5" />
-                      <span className="font-medium">Unexpected game state: {gameState.status}</span>
+                      <span className="font-medium">Неожиданное состояние игры: {statusLabels[gameState.status] || gameState.status}</span>
                     </div>
                     <p className="text-sm text-amber-700 dark:text-amber-300">
-                      The game entered an unexpected state. Try refreshing the page or ending the game.
+                      Игра перешла в неожиданное состояние. Попробуйте обновить страницу или завершить игру.
                     </p>
                     <div className="flex gap-2">
                       <Button onClick={() => window.location.reload()} variant="outline" size="sm">
-                        Refresh Page
+                        Обновить страницу
                       </Button>
                       <Button onClick={endGame} variant="destructive" size="sm">
-                        End Game
+                        Завершить игру
                       </Button>
                     </div>
                   </div>
@@ -824,7 +832,7 @@ export default function HostControlPage({
                       className="w-full text-destructive hover:text-destructive"
                     >
                       <Square className="w-4 h-4 mr-2" />
-                      End Game Early
+                      Завершить игру досрочно
                     </Button>
                   )}
               </CardContent>
@@ -847,7 +855,7 @@ export default function HostControlPage({
                     <div className="space-y-2 max-h-64 overflow-y-auto">
                       {currentAnswers.length === 0 ? (
                         <p className="text-sm text-muted-foreground text-center py-4">
-                          Waiting for answers...
+                          Ожидание ответов...
                         </p>
                       ) : (
                         currentAnswers
@@ -887,7 +895,7 @@ export default function HostControlPage({
                                     <XCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
                                   )}
                                   {easterEggClicks.get(currentQuestion.id)?.some((click) => click.playerId === answer.playerId) && (
-                                    <span className="text-base" title="Clicked easter egg">
+                                    <span className="text-base" title="Нажал на пасхалку">
                                       🥚
                                     </span>
                                   )}
@@ -901,7 +909,7 @@ export default function HostControlPage({
                                   +{answer.pointsEarned}
                                 </p>
                                 <p className="text-xs text-muted-foreground">
-                                  Total: {answer.totalScore} (#{answer.position})
+                                  Всего: {answer.totalScore} (#{answer.position})
                                 </p>
                               </div>
                             </div>
@@ -919,22 +927,22 @@ export default function HostControlPage({
             {gameState.autoAdmit ? (
               <div className="flex items-center gap-2 px-3 py-2 bg-green-100/50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                 <Shield className="w-4 h-4 text-green-600 dark:text-green-400" />
-                <span className="text-sm text-green-700 dark:text-green-400">Auto-admit enabled</span>
+                <span className="text-sm text-green-700 dark:text-green-400">Автодопуск включён</span>
               </div>
             ) : (
               <Card className="border-yellow-300 dark:border-yellow-700">
                 <CardHeader className="pb-2">
                   <CardTitle className="flex items-center gap-2 text-base">
                     <Shield className="w-4 h-4 text-yellow-600" />
-                    Admission Control
+                    Контроль допуска
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm">Requires Approval</span>
+                    <span className="text-sm">Требуется подтверждение</span>
                     {admissionRequests.length > 0 && (
                       <Badge variant="destructive" className="animate-pulse">
-                        {admissionRequests.length} pending
+                        Ожидают: {admissionRequests.length}
                       </Badge>
                     )}
                   </div>
@@ -948,7 +956,7 @@ export default function HostControlPage({
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Bell className="w-4 h-4 text-yellow-500" />
-                    Admission Requests ({admissionRequests.length})
+                    Запросы на допуск ({admissionRequests.length})
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -964,20 +972,20 @@ export default function HostControlPage({
                             size="sm"
                             onClick={() => handleAdmitPlayer(request.playerId)}
                             className="bg-green-600 hover:bg-green-700 text-white flex-1 sm:flex-initial"
-                            title="Admit player to game"
+                            title="Допустить игрока в игру"
                           >
                             <UserCheck className="w-4 h-4 mr-1" />
-                            Admit
+                            Допустить
                           </Button>
                           <Button
                             size="sm"
                             variant="destructive"
                             onClick={() => handleRefusePlayer(request.playerId)}
-                            title="Refuse player admission"
+                            title="Отклонить запрос игрока"
                             className="flex-1 sm:flex-initial"
                           >
                             <UserX className="w-4 h-4 mr-1" />
-                            Refuse
+                            Отклонить
                           </Button>
                         </div>
                       </div>
@@ -992,7 +1000,7 @@ export default function HostControlPage({
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    Players ({gameState.players.filter((p) => p.isActive).length})
+                    Игроки ({gameState.players.filter((p) => p.isActive).length})
                   </div>
                   {playerSearch && (
                     <Button
@@ -1001,7 +1009,7 @@ export default function HostControlPage({
                       onClick={() => setPlayerSearch("")}
                       className="h-7 px-2 text-xs"
                     >
-                      Clear
+                      Очистить
                     </Button>
                   )}
                 </CardTitle>
@@ -1009,7 +1017,7 @@ export default function HostControlPage({
                 <div className="relative mt-2">
                   <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search players..."
+                    placeholder="Поиск игроков..."
                     value={playerSearch}
                     onChange={(e) => setPlayerSearch(e.target.value)}
                     className="pl-9 h-9"
@@ -1020,7 +1028,7 @@ export default function HostControlPage({
                 <div className="space-y-2 max-h-96 overflow-y-auto">
                   {filteredDisplayScores.length === 0 && playerSearch && (
                     <p className="text-sm text-muted-foreground text-center py-4">
-                      No players match "{playerSearch}"
+                      Нет игроков по запросу "{playerSearch}"
                     </p>
                   )}
                   {filteredDisplayScores.map((player, index) => {
@@ -1075,7 +1083,7 @@ export default function HostControlPage({
                           </div>
                           {!isActive && (
                             <p className="text-xs text-destructive">
-                              Disconnected
+                              Отключён
                             </p>
                           )}
                         </div>
@@ -1084,7 +1092,7 @@ export default function HostControlPage({
                         <div className="flex items-center gap-1.5 shrink-0">
                           {/* Answered indicator during question */}
                           {gameState.status === "QUESTION" && playerInfo?.hasAnswered && (
-                            <span title="Answered">
+                            <span title="Ответил">
                               <CheckCircle2 className="w-4 h-4 text-green-500" />
                             </span>
                           )}
@@ -1105,7 +1113,7 @@ export default function HostControlPage({
                           {/* Easter Egg Indicator */}
                           {currentQuestion?.easterEggEnabled &&
                             easterEggClicks.get(currentQuestion.id)?.some((click) => click.playerId === player.playerId) && (
-                              <span className="text-sm" title="Clicked easter egg">🥚</span>
+                              <span className="text-sm" title="Нажал на пасхалку">🥚</span>
                             )}
 
                           {/* Power-up Indicators - using lucide icons */}
@@ -1115,7 +1123,7 @@ export default function HostControlPage({
                               <span
                                 key={idx}
                                 className="flex items-center justify-center w-5 h-5 rounded bg-muted"
-                                title={`Used ${usage.powerUpType} power-up`}
+                                title={`Использовал усиление: ${usage.powerUpType}`}
                               >
                                 {usage.powerUpType === "hint" && <Lightbulb className="w-3 h-3 text-blue-500" />}
                                 {usage.powerUpType === "copy" && <Users className="w-3 h-3 text-purple-500" />}
@@ -1132,7 +1140,7 @@ export default function HostControlPage({
                         <button
                           onClick={() => handleRemovePlayer(player.playerId, player.name)}
                           className="text-destructive hover:bg-destructive/10 p-1.5 rounded-lg transition-colors shrink-0"
-                          title="Remove player"
+                          title="Удалить игрока"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -1141,7 +1149,7 @@ export default function HostControlPage({
                   })}
                   {gameState.players.length === 0 && (
                     <p className="text-sm text-muted-foreground text-center py-4">
-                      No players yet
+                      Игроков пока нет
                     </p>
                   )}
                 </div>
@@ -1155,10 +1163,10 @@ export default function HostControlPage({
       <Dialog open={removeDialogOpen} onOpenChange={setRemoveDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remove Player?</DialogTitle>
+            <DialogTitle>Удалить игрока?</DialogTitle>
             <DialogDescription>
-              Are you sure you want to remove <strong>{playerToRemove?.name}</strong> from the game?
-              They will be able to request to rejoin.
+              Вы уверены, что хотите удалить <strong>{playerToRemove?.name}</strong> из игры?
+              Игрок сможет снова отправить запрос на подключение.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -1166,13 +1174,13 @@ export default function HostControlPage({
               variant="outline"
               onClick={() => setRemoveDialogOpen(false)}
             >
-              Cancel
+              Отмена
             </Button>
             <Button
               variant="destructive"
               onClick={confirmRemovePlayer}
             >
-              Remove Player
+              Удалить игрока
             </Button>
           </DialogFooter>
         </DialogContent>
