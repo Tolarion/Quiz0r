@@ -170,7 +170,7 @@ export default function HostDisplayPage({
           <BackgroundEffects theme={loadingTheme} />
           <div className="text-center relative z-10">
             <div className="animate-pulse text-2xl font-bold text-primary">
-              Connecting...
+              Подключение...
             </div>
           </div>
         </div>
@@ -191,7 +191,7 @@ export default function HostDisplayPage({
           <BackgroundEffects theme={loadingTheme} />
           <div className="text-center relative z-10">
             <div className="text-2xl font-bold text-muted-foreground">
-              Loading game...
+              Загрузка игры...
             </div>
           </div>
         </div>
@@ -247,7 +247,7 @@ export default function HostDisplayPage({
                   />
                 </Card>
                 <div className="text-center lg:text-left">
-                  <p className="text-sm md:text-base text-muted-foreground mb-3">Scan QR or enter code</p>
+                  <p className="text-sm md:text-base text-muted-foreground mb-3">Сканируйте QR или введите код</p>
                   <p className="text-5xl md:text-6xl lg:text-7xl font-mono font-bold tracking-widest text-primary">
                     {gameCode}
                   </p>
@@ -266,7 +266,7 @@ export default function HostDisplayPage({
             <div className="flex-1">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <h2 className="text-xl md:text-2xl font-semibold">
-                  Players
+                  Игроки
                 </h2>
                 <span className="bg-primary text-primary-foreground text-lg font-bold px-3 py-1 rounded-full">
                   {gameState.players.length}
@@ -301,7 +301,7 @@ export default function HostDisplayPage({
                 ))}
                 {gameState.players.length === 0 && (
                   <p className="text-muted-foreground text-lg">
-                    Scan the QR code to join!
+                    Сканируйте QR-код, чтобы присоединиться!
                   </p>
                 )}
               </div>
@@ -341,7 +341,7 @@ export default function HostDisplayPage({
             {currentQuestion.imageUrl && (
               <img
                 src={currentQuestion.imageUrl}
-                alt="Section"
+                alt="Раздел"
                 className="max-h-80 mx-auto rounded-xl shadow-2xl"
               />
             )}
@@ -370,9 +370,9 @@ export default function HostDisplayPage({
           >
             <div className="flex flex-col items-center gap-4 text-amber-200">
               <AlarmClock className="w-14 h-14 animate-bounce" />
-              <h2 className="text-4xl font-bold text-white">Time&apos;s up!</h2>
+              <h2 className="text-4xl font-bold text-white">Время вышло!</h2>
               <p className="text-lg text-amber-100/80 max-w-xl">
-                The host will reveal the answers shortly.
+                Ведущий скоро покажет ответы.
               </p>
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function HostDisplayPage({
             {/* Progress */}
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
               <Badge variant="secondary" className="text-sm md:text-base lg:text-lg px-3 md:px-4 py-1">
-                Question {gameState.currentQuestionNumber} of{" "}
+                Вопрос {gameState.currentQuestionNumber} из{" "}
                 {gameState.totalQuestions}
               </Badge>
               {!isRevealing && (
@@ -402,7 +402,7 @@ export default function HostDisplayPage({
                   <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">
                     {timeRemaining}
                   </span>
-                  <span className="text-sm md:text-base text-muted-foreground">seconds</span>
+                  <span className="text-sm md:text-base text-muted-foreground">секунд</span>
                 </div>
               )}
             </div>
@@ -425,7 +425,7 @@ export default function HostDisplayPage({
                   {currentQuestion.imageUrl && (
                     <img
                       src={currentQuestion.imageUrl}
-                      alt="Question"
+                      alt="Вопрос"
                       className="max-h-64 mx-auto rounded-lg shadow-lg"
                     />
                   )}
@@ -474,7 +474,7 @@ export default function HostDisplayPage({
                         </div>
                         {isRevealing && (
                           <div className="mt-2 text-sm opacity-80">
-                            {answerCount} player{answerCount !== 1 ? "s" : ""}
+                            {answerCount} {answerCount === 1 ? "игрок" : answerCount >= 2 && answerCount <= 4 ? "игрока" : "игроков"}
                           </div>
                         )}
                       </div>
@@ -490,7 +490,7 @@ export default function HostDisplayPage({
                   const answeredCount = activeAdmitted.filter((p) => p.hasAnswered).length;
                   return (
                     <div className="text-center text-muted-foreground">
-                      {answeredCount} of {activeAdmitted.length} players answered
+                      Ответили: {answeredCount} из {activeAdmitted.length}
                     </div>
                   );
                 })()}
@@ -711,7 +711,7 @@ export default function HostDisplayPage({
         <BackgroundEffects theme={theme} />
         <div className="text-center relative z-10">
           <h1 className="text-3xl font-bold">{gameState.quizTitle}</h1>
-          <p className="text-muted-foreground mt-2">Game in progress...</p>
+          <p className="text-muted-foreground mt-2">Игра в процессе...</p>
         </div>
       </div>
       <AspectRatioHelper />
