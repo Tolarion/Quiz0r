@@ -468,17 +468,17 @@ export default function HostControlPage({
             {/* Control Buttons */}
             <Card>
               <CardHeader>
-                <CardTitle>Game Controls</CardTitle>
+                <CardTitle>Управление игрой</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {gameState.status === "WAITING" && (
                   <div className="space-y-4">
                     <p className="text-muted-foreground">
                       {gameState.players.length === 0
-                        ? "Waiting for players to join..."
+                        ? "Ожидание подключения игроков..."
                         : `${gameState.players.length} player${
                             gameState.players.length !== 1 ? "s" : ""
-                          } ready`}
+                          } готово`}
                     </p>
                     <Button
                       onClick={handleStartGame}
@@ -487,7 +487,7 @@ export default function HostControlPage({
                       className="w-full"
                     >
                       <Play className="w-4 h-4 mr-2" />
-                      Start Game
+                      Начать игру
                     </Button>
                     <Button
                       onClick={cancelGame}
@@ -495,7 +495,7 @@ export default function HostControlPage({
                       className="w-full text-destructive hover:text-destructive"
                     >
                       <X className="w-4 h-4 mr-2" />
-                      Cancel Game
+                      Отменить игру
                     </Button>
                   </div>
                 )}
@@ -521,9 +521,9 @@ export default function HostControlPage({
                       <p className="text-lg">{currentQuestion?.questionText}</p>
                       <p className="text-sm text-muted-foreground mt-2">
                         {currentQuestion?.questionType === "MULTI_SELECT"
-                          ? "Multi-select"
-                          : "Single select"}{" "}
-                        • {currentQuestion?.points} points •{" "}
+                          ? "Множественный выбор"
+                          : "Одиночный выбор"}{" "}
+                        • {currentQuestion?.points} баллов •{" "}
                         {currentQuestion?.timeLimit}s
                       </p>
                     </div>
@@ -585,7 +585,7 @@ export default function HostControlPage({
                       </div>
                     )}
                     <p className="text-sm text-muted-foreground">
-                      Players are seeing this section slide. Click &quot;Continue&quot; when ready to proceed.
+                      Players are seeing this section slide. Click &quot;Continue&quot; when готово to proceed.
                     </p>
                     <Button onClick={nextQuestion} size="lg" className="w-full">
                       <SkipForward className="w-4 h-4 mr-2" />
@@ -600,7 +600,7 @@ export default function HostControlPage({
                       <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg flex items-center justify-between">
                         <div className="flex items-center gap-2 text-amber-800 dark:text-amber-200">
                           <Bell className="w-4 h-4" />
-                          <span className="font-medium">Time&apos;s up! Reveal answers when ready.</span>
+                          <span className="font-medium">Time&apos;s up! Reveal answers when готово.</span>
                         </div>
                         <Button onClick={revealAnswers} variant="secondary" size="sm">
                           <Eye className="w-4 h-4 mr-2" />
@@ -628,8 +628,8 @@ export default function HostControlPage({
                           <Eye className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                           <p className="font-medium text-blue-800 dark:text-blue-300 text-sm">
                             {nextQuestionPreview.questionNumber
-                              ? `Up Next (Q${nextQuestionPreview.questionNumber} of ${nextQuestionPreview.totalQuestions})`
-                              : "Up Next"}
+                              ? `Далее (В${nextQuestionPreview.questionNumber} из ${nextQuestionPreview.totalQuestions})`
+                              : "Далее"}
                           </p>
                         </div>
                         {nextQuestionPreview.section ? (
@@ -707,8 +707,8 @@ export default function HostControlPage({
                           <Eye className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                           <p className="font-medium text-blue-800 dark:text-blue-300 text-sm">
                             {nextQuestionPreview.questionNumber
-                              ? `Up Next (Q${nextQuestionPreview.questionNumber} of ${nextQuestionPreview.totalQuestions})`
-                              : "Up Next"}
+                              ? `Далее (В${nextQuestionPreview.questionNumber} из ${nextQuestionPreview.totalQuestions})`
+                              : "Далее"}
                           </p>
                         </div>
                         {nextQuestionPreview.section ? (
@@ -830,14 +830,14 @@ export default function HostControlPage({
               </CardContent>
             </Card>
 
-            {/* Player Answers Card - shown during QUESTION and REVEALING */}
+            {/* Ответы игроков Card - shown during QUESTION and REVEALING */}
             {(gameState.status === "QUESTION" ||
               gameState.status === "REVEALING") &&
               currentQuestion && (
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
-                      <span>Player Answers</span>
+                      <span>Ответы игроков</span>
                       <Badge variant="secondary">
                         {currentAnswers.length} / {gameState.players.length}
                       </Badge>

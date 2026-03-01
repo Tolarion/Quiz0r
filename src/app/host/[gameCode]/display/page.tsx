@@ -226,7 +226,7 @@ export default function HostDisplayPage({
                 {gameState.quizTitle}
               </h1>
               <div className="flex items-center justify-center gap-2 text-lg md:text-xl text-muted-foreground">
-                <span>Waiting for players</span>
+                <span>Ожидание игроков</span>
                 <span className="flex gap-1">
                   <span className="animate-bounce" style={{ animationDelay: "0ms" }}>.</span>
                   <span className="animate-bounce" style={{ animationDelay: "150ms" }}>.</span>
@@ -503,7 +503,7 @@ export default function HostDisplayPage({
     );
   }
 
-  // Scoreboard
+  // Таблица лидеров
   if (gameState.status === "SCOREBOARD" || gameState.status === "FINISHED") {
     const isFinished = gameState.status === "FINISHED";
     const theme = gameState.quizTheme;
@@ -525,7 +525,7 @@ export default function HostDisplayPage({
           <BackgroundEffects theme={theme} />
           <div className="max-w-3xl mx-auto relative z-10 px-4">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8">
-              {isFinished ? "Final Results" : "Scoreboard"}
+              {isFinished ? "Итоговые результаты" : "Таблица лидеров"}
             </h1>
 
             {/* Podium for final */}

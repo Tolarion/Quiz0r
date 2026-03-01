@@ -27,12 +27,12 @@ export default function JoinPage() {
 
     const code = gameCode.trim().toUpperCase();
     if (!code) {
-      setError("Please enter a game code");
+      setError("Пожалуйста, введите код игры");
       return;
     }
 
     if (code.length !== 6) {
-      setError("Game code must be 6 characters");
+      setError("Код игры должен состоять из 6 символов");
       return;
     }
 
@@ -52,7 +52,7 @@ export default function JoinPage() {
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            Назад
           </Link>
         </header>
       )}
@@ -68,10 +68,10 @@ export default function JoinPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium">Game Code</label>
+                <label className="text-sm font-medium">Код игры</label>
                 <Input
                   type="text"
-                  placeholder="Enter code..."
+                  placeholder="Введите код..."
                   value={gameCode}
                   onChange={(e) =>
                     setGameCode(e.target.value.toUpperCase().slice(0, 6))
@@ -86,7 +86,7 @@ export default function JoinPage() {
               </div>
 
               <Button type="submit" size="lg" className="w-full">
-                Join Game
+                Присоединиться к игре
               </Button>
             </form>
           </CardContent>

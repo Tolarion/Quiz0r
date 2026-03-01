@@ -96,7 +96,7 @@ export default function GamesPage() {
         <div className="relative">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by game code or quiz name..."
+            placeholder="Поиск по коду игры или названию викторины..."
             value={filters.search}
             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
             className="pl-10"
